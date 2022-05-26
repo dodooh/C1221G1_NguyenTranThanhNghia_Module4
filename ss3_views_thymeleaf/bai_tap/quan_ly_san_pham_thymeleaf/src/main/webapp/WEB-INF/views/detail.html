@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+			 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Create Product</title>
+	<th:block th:replace="~{layout :: link_css}">
+	</th:block>
+</head>
+<body>
+<div class="highlight-bg has-margin-bottom">
+  <div class="container">
+    <h3>Product Detail</h3>
+    <a th:href="@{/product}" class="btn btn-secondary">Back to List</a>
+  </div>
+</div>
+
+<div class="container theme-showcase min-vh-100" role="main">
+	  <div class="card" style="width: 18rem;">
+		  <div class="card-body">
+			<h5 class="card-title"><span th:text="${product.name}"></span></h5>
+			<h6 class="card-subtitle mb-2 text-muted">$ <span th:text="${product.price}"></span></h6>
+			<p class="card-text"><span th:text="${product.description}"></span></p>
+			<p class="card-text"><span th:text="${product.manufactor}"></span></p>
+			<a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
+		  </div>
+	</div>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: bottom_script}">
+</th:block>
+</body>
+</html>

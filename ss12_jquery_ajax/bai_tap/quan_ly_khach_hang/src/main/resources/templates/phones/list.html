@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>List Smartphone</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      
+      $(document).ready(function () {
+        listenToDelete();
+        listenToEdit();
+      });
+
+      function listenToDelete() {
+        $('.deleteSmartphone').click(function (event) {
+          let a = $(this);
+          let smartphoneId = a.attr("href");
+          $.ajax({
+            type: "DELETE",
+            url: `/smartphones/${smartphoneId}`,
+            success: function (data) {
+              a.parent().parent().remove();
+            }
+
+          });
+          event.preventDefault();
+        });
+      }
+
+      function addNewSmartPhone() {
+        let producer = $('#producer').val();
+        let model = $('#model').val();
+        let price = $('#price').val();
+        let newSmartphone = {
+          producer: producer,
+          model: model,
+          price: price
+        };
+        $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: "POST",
+          data: JSON.stringify(newSmartphone),
+          url: "/smartphones",
+          success: successHandler
+        });
+        event.preventDefault();
+      }
+
+      function editSmartPhone() {
+        let producer = $('#producer').val();
+        let model = $('#model').val();
+        let price = $('#price').val();
+        let id = $('#idInput').val();
+        let newSmartphone = {
+          producer: producer,
+          model: model,
+          price: price
+        };
+        $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: "PATCH",
+          data: JSON.stringify(newSmartphone),
+          url: "/smartphones/" + id,
+          success: successHandler
+        });
+        $('#addBtn').prop('disabled', false);
+        $('#editBtn').prop('disabled', true);
+        $('#idInput').prop('disabled', true).val(null);
+        event.preventDefault();
+      }
+
+      function successHandler() {
+        $.ajax({
+          type: "GET",
+          url: "/smartphones",
+          success: function (data) {
+            let content = '    <tr>\n' +
+                '        <td>Producer</td>\n' +
+                '        <td>Model</td>\n' +
+                '        <td>Price</td>\n' +
+                '        <td>Edit</td>\n' +
+                '        <td>Delete</td>\n' +
+                '    </tr>';
+            for (let i = 0; i < data.length; i++) {
+              content += getSmartphone(data[i]);
+            }
+            document.getElementById('smartphoneList').innerHTML = content;
+            listenToDelete();
+            listenToEdit();
+            
+          }
+        });
+      }
+
+      function getSmartphone(smartphone) {
+        return `<tr>
+					<td >${smartphone.producer}</td>
+					<td >${smartphone.model}</td>
+					<td >${smartphone.price}</td>
+					<td><a class="editSmartphone" href="${smartphone.id}">Edit</a></td>
+					<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td>
+				</tr>`;
+      }
+		
+      function listenToEdit() {
+        $('.editSmartphone').click(function (event) {
+          event.preventDefault();
+          let a = $(this);
+          let smartphoneId = a.attr("href");
+          $('#producer').val(a.parent().parent().children().eq(0).text());
+          $('#model').val(a.parent().parent().children().eq(1).text());
+          $('#price').val(a.parent().parent().children().eq(2).text());
+          $('#addBtn').prop('disabled', true);
+          $('#editBtn').prop('disabled', false);
+          $('#idInput').removeAttr('disabled').val(smartphoneId)
+
+          
+        });
+      }
+      
+      
+    </script>
+	
+</head>
+<body>
+<form id="add-smartphone">
+    <table>
+	    <input type="hidden" name="id" disabled id="idInput">
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" id="producer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" id="model" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+	        <td></td>
+            <td>
+	            <input type="submit" id="addBtn" value="Add" onclick="addNewSmartPhone()">
+	            <input disabled type="submit" id="editBtn" value="Edit" onclick="editSmartPhone()">
+            </td>
+        </tr>
+    </table>
+</form>
+<h1>Smartphone List</h1>
+<table id="smartphoneList">
+    <tr>
+        <td>Producer</td>
+        <td>Model</td>
+        <td>Price</td>
+	    <td>Update</td>
+        <td>Delete</td>
+    </tr>
+    <th:block th:each="smartphone: ${smartphones}">
+        <tr>
+            <td th:text="${smartphone.producer}"></td>
+            <td th:text="${smartphone.model}"></td>
+            <td th:text="${smartphone.price}"></td>
+	          <td><a class="editSmartphone" th:href="${smartphone.getId()}">Edit</a></td>
+            <td><a class="deleteSmartphone" th:href="${smartphone.getId()}">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

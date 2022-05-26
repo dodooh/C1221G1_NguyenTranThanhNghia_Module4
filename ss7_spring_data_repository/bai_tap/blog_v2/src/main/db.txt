@@ -1,0 +1,31 @@
+insert into ss6_blog.category (id, category_name)
+values  (1, 'C++'),
+        (2, 'Java8'),
+        (3, 'Python'),
+        (4, 'C#'),
+        (5, 'Javascript5'),
+        (9, 'Python3'),
+        (10, 'React');
+
+insert into ss6_blog.blog (id, author, content, create_date, rate, title, category_id, img_link)
+values  (1, 'Nguyen A', 'As has already been mentioned by others, I''m far more likely to open the dev tools and actually inspect the calls that are going out to grab data - or to track what I''m doing.
+
+
+As silly as this sounds, it''s amazing how many people will open a web page with a huge amount of text and then spend copious amounts of time reading through the whole dang thing until they find what they''re looking for. Years ago, an executive in my company was watching me look for info on a series of pages and he was amazed by my frequent use of CTRL-F to quickly hone in on the data I was looking for.
+
+
+I often find myself needing to retrieve the plain-text value of a password that''s been saved for me in Chrome. By default, the password field is always displayed with <input type="password"/>, which means that the "text" is obfuscated from me. So I inspect the <input> element, change it to <input type="text"/>, and I can grab the raw password value that''s stored in my browser.
+
+
+I''m also far more likely to use the dev tools to.... "borrow" any of the assets that are used to build the page.
+
+
+For all of my frequently-visited bookmarks, I edit the bookmark so there''s no text/title in them. In this way, my bookmarks bar just has a series of icons. This allows me to fit all of my most-used bookmarks in my bookmark bar, like so:
+dev-to-uploads.s3.amazonaws.com/up...', null, null, 'How do you work with computers and the web that is different from non-developers?', 2, 'https://picsum.photos/id/237/352/234'),
+        (2, 'Nguyễn Trần Thanh Nghĩa', 'This is test for Python', '2022-05-11', 4, 'Spring Security, Basic Authentication and Form Login, and Oauth2', 1, 'https://picsum.photos/id/239/352/234'),
+        (6, 'Nguyen A', 'This is test for C++', '2022-05-01', 0, 'Build Spring Microservices and Dockerize Them for Production', 4, 'https://picsum.photos/id/217/352/234'),
+        (7, 'Nguyễn Trần Thanh Nghĩa', 'This is test for Python', '2022-05-19', 1, 'Swagger-2 API documentation for Spring App using Springfox', 3, 'https://picsum.photos/id/233/352/234'),
+        (8, 'Nguyen A', 'This is test for C++', '2022-05-10', 0, 'Getting Started with Spring Boot', 2, 'https://picsum.photos/id/237/352/234'),
+        (9, 'Nguyễn Trần Thanh Nghĩa', 'This is test for Python', '2022-05-11', 4, 'What is Spring Boot? Autoconfigurations In-Depth', 1, 'https://picsum.photos/id/239/352/234'),
+        (10, 'Nguyen A', 'This is test for C++', '2022-05-01', 0, 'Spring-Session Grails Plugin (Part 3)', 4, 'https://picsum.photos/id/217/352/234'),
+        (11, 'Nguyễn Trần Thanh Nghĩa', 'This is test for Python', '2022-05-19', 4, 'What is Spring Framework? More than Dependency Injection', 3, 'https://picsum.photos/id/233/352/234');

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+</head>
+<body id="body-pd">
+  <header th:replace="~{layout :: l_header}"></header>
+  <div th:replace="~{layout :: l_navbar}"></div>
+  <div class="height-100 bg-light">
+        <h4>Welcome to Furama Resort Management</h4>
+  </div>
+  <th:block th:replace="~{layout :: l_js}">
+  </th:block>
+</body>
+</html>

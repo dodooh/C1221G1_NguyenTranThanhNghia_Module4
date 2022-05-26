@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>List Blog</title>
+    </head>
+    <body>
+        <div align="center">
+            <input id="searchInput" type="text" />
+            <button id="searchBtn">Search</button>
+            <br />
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody id="bodyStudent">
+                </tbody>
+            </table>
+            <br />
+            <button id="loadMore">Load More</button>  
+            <!-- <button id="prevBtn">Prev</button>
+            <span id="currentPageNumber"></span>
+            /
+            <span id="totalPageNumber"></span>
+            <button id="nextBtn">Next</button> -->
+        </div>
+    </body>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.slim.js"
+        integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+        crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        let curPage = 0;
+        let saveKeyword= ''
+        $(document).ready(() => {
+            let currentBody = $('#bodyStudent').html()
+            currentBody += getList(0);
+            console.log(currentBody);
+            $('#bodyStudent').html(currentBody);
+        });
+
+        $('#searchBtn').click(() => {
+            $('#bodyStudent').html('')
+            saveKeyword = $('#searchInput').val();
+            getList(0, saveKeyword);
+        });
+        
+        $('#loadMore').click(() => {
+            getList(curPage + 1,saveKeyword)
+        });
+
+        function getList(page = 0, q = '') {
+            $.ajax({
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                type: 'GET', //GET, DELETE, PUT...
+                url: 'http://localhost:8080/api/blogs?q=' + q + '&page=' + page,
+                //xử lý khi thành công
+                success: function (data) {
+                    console.log(data);
+                    let outHTML = '';
+                    let count = 1;
+                    for (let blog of data.content) {
+                        outHTML += `<tr>
+                                    <td>${(data.number * 4) + count++}</td>
+                                    <td>${blog.title}</td>
+                                    <td>${blog.category.categoryName}</td>
+                                    <td>${blog.author}</td>
+                                </tr>`;
+                    }
+                  curPage = data.number;
+                    let currentBody = $('#bodyStudent').html()
+                    currentBody += outHTML;
+                    $('#bodyStudent').html(currentBody);
+                    if (curPage == data.totalPages - 1) {
+                      $('#loadMore').prop('disabled', true);
+                    }
+                },
+            });
+        }
+    </script>
+</html>

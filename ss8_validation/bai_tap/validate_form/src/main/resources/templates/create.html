@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form</title>
+  <style>
+      body {
+        text-align: center;
+      }
+      div table
+      {
+        display: block;
+        text-align: center;
+      }
+      table
+      {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+      }
+  </style>
+</head>
+<body>
+<div>
+    <h1>Register</h1>
+    <form action="#" th:action="@{/create}" th:object="${userDto}"
+          method="POST">
+        <table border="1">
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" th:field="*{firstName}"/></td>
+                <td style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" th:field="*{lastName}"/></td>
+                <td style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Day Of Birth</td>
+                <td><input type="text" th:field="*{dayOfBirth}"/></td>
+                <td style="color: red" th:if="${#fields.hasErrors('dayOfBirth')}" th:errors="*{dayOfBirth}">Age Error</td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td><input type="text" th:field="*{phoneNumber}"/></td>
+                <td style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" th:field="*{email}"/></td>
+                <td style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">submit</button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

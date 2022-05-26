@@ -1,0 +1,187 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+			 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Product Management</title>
+	<link rel="stylesheet"
+	      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+	      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+	      crossorigin="anonymous">
+	<th:block th:replace="~{layout :: link_css}">
+	</th:block>
+</head>
+<body>
+<!--HEADER-->
+<!--<div th:replace="~{layout :: navbar}"></div>-->
+<!--SUBPAGE HEAD-->
+<!--<div th:replace="~{layout :: subhead}"></div>-->
+<div class="highlight-bg has-margin-bottom">
+  <div class="container">
+    <div class="row">
+		<div class="col-6 text-left">
+			<h3>List Products</h3>
+		</div>
+		<div class="col-6 text-right">
+			<form th:action="@{/product}">
+				<input type="search" name="q">
+				<input class="btn btn-info" type="submit" value="Search">
+			</form>
+		</div>
+	</div>
+	  <p th:text="${msg != null} ? ${msg} : ''"></p>
+    <a th:href="@{/product/create}" class="btn btn-success">Create New Product</a>
+  </div>
+</div>
+
+<!--MAIN BODY-->
+<div class="container theme-showcase min-vh-100" role="main">
+	<div class="row">
+		<div class="col-2">
+			<form th:action="@{/product}" method="get">
+				<input type="hidden" name="q" th:value="${q}">
+				<div class="form-group">
+				    <label for="sort-by">Sort By</label>
+				    <select name="sortBy" class="form-control" id="sort-by">
+				      <option value="name">Name</option>
+				      <option value="manufacture">Manufacture</option>
+				      <option value="price">Price</option>
+				    </select>
+				</div>
+				<div class="form-group">
+					<div class="form-check">
+						<label class="form-check-label" for="exampleRadios1">
+					        &nbsp;Ascending
+					    </label>
+					    <input class="form-check-input" type="radio" name="dir" id="exampleRadios1"
+					         value="asc" checked>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label" for="exampleRadios2">
+						    &nbsp;Descending
+						</label>
+					    <input class="form-check-input" type="radio" name="dir" id="exampleRadios2"
+					         value="desc">
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary" type="submit">Sort</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-10">
+			<table class="table table-lg table-striped">
+		        <thead>
+		          <tr>
+		            <th>#</th>
+		            <th>Product Code</th>
+		            <th>Product Name</th>
+		            <th>Price</th>
+		            <th>Description</th>
+		            <th>Manufacture</th>
+		            <th>Function</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr th:each="product, loop : ${productList}">
+		            <td th:text="${(productList.number * 3) +  loop.count}"></td>
+		            <td th:text="${product.productCode}"></td>
+		            <td>
+						<a th:href="@{/product/{id}(id=${product.id})}"><span
+							th:text="${product.name}"></span>	</a>
+					</td>
+		            <td th:text="${product.price}"></td>
+		            <td th:text="${product.description}"></td>
+		            <td th:text="${product.manufacture}"></td>
+					  <td>
+						  <a th:href="@{/product/update/{id}(id=${product.id})}"
+						     class="btn btn-warning">Update</a>
+						  <!-- Button trigger modal -->
+						<button
+							th:attr="onclick=|deleteModal('${product.id}', '${product.name}', '${product.price}')|"
+							type="button" class="btn btn-danger" data-toggle="modal"
+							data-target="#exampleModal">
+						  Delete
+						</button>
+						  <!--				  <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>-->
+					  </td>
+		          </tr>
+		        </tbody>
+		      </table>
+			<div class="row d-flex justify-content-center">
+					<nav th:fragment="pagination" aria-label="Page navigation example"
+					     style="width: initial">
+					  <ul class="pagination">
+					    <li class="page-item">
+						    
+							    <a class="btn btn-light"
+							       th:attrappend="class=${!productList.hasPrevious() ? ' disabled' : ''}"
+							       th:href="@{/product(page=${productList.number - 1}, q=${q}, sortBy=${sortBy}, dir=${dir})}"
+							    >
+								        Previous
+								    
+							    </a>
+					    </li>
+					  <li class="page-item bg-secondary">
+						  <span th:text="${productList.number + 1}"></span>
+						  <span>/</span>
+						  <span th:text="${productList.totalPages}"></span>
+					  </li>
+					    <li class="page-item">
+							    <a class="btn btn-light"
+							       th:attrappend="class=${!productList.hasNext() ? ' disabled' : ''}"
+							       th:href="@{/product( page=${productList.number + 1}, q=${q}, sortBy=${sortBy}, dir=${dir} )}"
+							    >
+								        Next
+							    </a>
+					    </li>
+					  </ul>
+					</nav>
+				</div>
+		</div>
+		</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form action="/product/delete" method="post">
+			  <div class="modal-body">
+					<input type="hidden" name="id" id="idToDelete">
+					<input type="text" disabled id="nameToDelete">
+					<input type="text" disabled id="priceToDelete">
+				  <p>DO YOU WANT TO DELETE THIS PRODUCT</p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+				<button type="submit" class="btn btn-danger">YES</button>
+			  </div>
+		</form>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: bottom_script}">
+</th:block>
+<script>
+	function deleteModal(id, name, price) {
+      document.getElementById("idToDelete").value = id;
+      document.getElementById("nameToDelete").value = name;
+      document.getElementById("priceToDelete").value = price;
+    }
+</script>
+
+</body>
+</html>

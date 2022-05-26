@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<title>CONCAC</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+	<h3>Music Zing Vip</h3>
+<p>
+  <a th:href="@{/music/create}">
+    Add new Music
+  </a>
+</p>
+<table id = "products">
+  <thead>
+  <tr>
+    <th>Song Name</th>
+    <th>Artist</th>
+    <th>Genre</th>
+    <th>Play</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="music : ${musics}">
+    <td th:text="${music.name}"></td>
+    <td th:text="${music.artist}"></td>
+    <td th:text="${music.genre}"></td>
+    <td>Function</td>
+    <td>
+      <audio controls>
+        <source th:src="@{'/files/' + ${music.pathFile}}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </td>
+    <td>
+      <a class="btn btn-warning" th:href="@{/music/edit/{id}(id=${music.songId})}">Edit</a>
+      |
+      <button
+          th:attr="onclick=|deleteModal('${music.songId}', '${music.name}', '${music.artist}')|"
+          type="button" class="btn btn-danger" data-toggle="modal"
+          data-target="#exampleModal">
+				  Delete
+				</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form th:action="@{/music/delete}" method="post">
+			  <div class="modal-body">
+					<input type="hidden" name="id" id="idToDelete">
+					<input type="text" disabled id="nameToDelete">
+					<input type="text" disabled id="priceToDelete">
+				  <p>DO YOU WANT TO DELETE THIS Song</p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+				<button type="submit" class="btn btn-danger">YES</button>
+			  </div>
+		</form>
+    </div>
+  </div>
+</div>
+<!--<footer th:replace="/layout :: bottom_script"></footer>-->
+<script>
+	function deleteModal(id, name, price) {
+      document.getElementById("idToDelete").value = id;
+      document.getElementById("nameToDelete").value = name;
+      document.getElementById("priceToDelete").value = price;
+    }
+</script>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>

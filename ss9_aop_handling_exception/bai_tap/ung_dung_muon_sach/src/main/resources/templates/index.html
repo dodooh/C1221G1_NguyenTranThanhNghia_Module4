@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book</title>
+</head>
+<body>
+<div align="center">
+<table border="1">
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Author</th>
+		<th>Quantity</th>
+		<th>Function</th>
+	</tr>
+	<tr th:each="book, loop : ${books}">
+		<td th:text="${loop.count}"></td>
+		<td th:text="${book.name}"></td>
+		<td th:text="${book.author}"></td>
+		<td th:text="${book.quantity}"></td>
+		<td>
+			<a th:href="@{/view/{id}(id=${book.id})}">Xem</a>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

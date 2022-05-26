@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <th:block th:fragment="top_css">
+    <link
+	    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+	    rel="stylesheet"
+    />
+	  <!-- Google Fonts -->
+    <link
+	    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+	    rel="stylesheet"
+    />
+	  <!-- MDB -->
+    <link
+	    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css"
+	    rel="stylesheet"
+    />
+  </th:block>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-dark ripple">
+  <div class="container-fluid">
+    <div class="d-flex">
+	    <a class="navbar-brand" href="/blog">BlogHub</a>
+  	    <a class="btn btn-outline-success" role="button" href="/blog/create">+ Blog</a>
+  	    <a class="btn btn-outline-success" role="button" href="/category/create">+ Category</a>
+    </div>
+    <form th:action="@{/blog/list}" class="d-flex input-group w-auto">
+      <input
+	      name="q"
+	      type="search"
+	      class="form-control rounded"
+	      placeholder="Search"
+	      aria-label="Search"
+	      aria-describedby="search-addon"
+      />
+      <span class="input-group-text text-white border-0" id="search-addon">
+        <button class="border-0 bg-transparent" type="submit"><i class="fas fa-search"></i></button>
+      </span>
+    </form>
+  </div>
+</nav>
+
+
+<nav th:fragment="pagination" aria-label="Page navigation example" style="width: initial">
+  <ul class="pagination">
+    <li class="page-item">
+	    <a class="btn btn-light"
+	       th:if="${blogs.hasPrevious()}"
+	       th:href="@{/blog/list(page=${blogs.number - 1}, q=${q})}"
+	    >
+		    Previous
+	    </a>
+    </li>
+	  <span>&nbsp;</span>
+    <li class="page-item">
+	    <a class="btn btn-light"
+	       th:if="${blogs.hasNext()}"
+	       th:href="@{/blog/list(page=${blogs.number + 1}, q=${q})}"
+	    >
+		    Next
+	    </a>
+    </li>
+  </ul>
+</nav>
+</body>
+<th:block th:fragment="bot_js">
+  <script
+	  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
+	  type="text/javascript"
+  ></script>
+</th:block>
+</html>

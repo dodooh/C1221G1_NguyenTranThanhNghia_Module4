@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 pt-2">
+		
+		<div class="alert alert-success"
+		     th:if="${#request.getAttribute('ok_message') != null}"
+		     th:text="${#request.getAttribute('ok_message')}">
+		</div>
+		
+		<div class="d-flex justify-content-between mb-2">
+				<div>
+					<a class="btn btn-success"
+					   th:href="@{'/contract/create'}"
+					   role="button">
+				    +
+				    <span th:text="${mainObject}"></span>
+			    </a>
+				</div>
+			</div>
+				<table class="table table-light table-bordered small">
+					<thead class="thead thead-dark text-center">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Contract Code</th>
+							<th scope="col">Customer Name</th>
+							<th scope="col">Employee</th>
+							<th scope="col">Service</th>
+							<th scope="col">Start Date</th>
+							<th scope="col">End Date</th>
+							<th scope="col">Deposit</th>
+							<th scope="col">Total Money</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="contract, loop : ${contracts}">
+							<td th:text="${(contracts.number * 5) + loop.count}"></td>
+							<td th:text="${contract.id}"></td>
+							<td th:text="${contract.customer.name}"></td>
+							<td th:text="${contract.employee.name}"></td>
+							<td th:text="${contract.facility.name}"></td>
+							<td th:text="${contract.startDate}"></td>
+							<td th:text="${contract.endDate}"></td>
+							<td th:text="${#numbers.formatDecimal(contract.deposit, 0, 'COMMA', 0, 'POINT')}"></td>
+							<td th:text="${#numbers.formatDecimal(contract.totalMoney, 0, 'COMMA', 0, 'POINT')}"></td>
+							<td>
+<!--								<button type="button" class="border-0 bg-transparent viewSpan" data-toggle="modal"-->
+<!--								        th:attr="onclick=|viewPrepare(-->
+<!--								          '${contract.name}',' ${contract.gender}', '${contract.dayOfBirth}',-->
+<!--								          '${contract.nationalId}', '${contract.address}', '${contract.phone}',-->
+<!--								          '${contract.mail}', '${contract.contractType.contractTypeName}')|"-->
+<!--								        data-target="#viewModal">-->
+<!--									<i class='bx bx-search-alt-2 bx-border bx-sm'></i>-->
+<!--								</button>-->
+<!--								-->
+								<a class="editSpan text-black"
+								   th:href="@{/detail-contract/create/{id}(id=${contract.id})}">
+								Add Contract Detail
+								</a>
+<!--								<button type="button" class="border-0 bg-transparent deleteSpan"-->
+<!--								        data-toggle="modal" data-target="#deleteModal"-->
+<!--								        th:attr="onclick=|deletePrepare('${contract.id}')|">-->
+<!--                        <i class='bx bx-trash bx-border bx-sm'></i>-->
+<!--								</button>-->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		
+		
+		<!--Phan Trang-->
+		<div class="pagination-control">
+			<div class="row d-flex justify-content-center">
+			<nav th:fragment="pagination" aria-label="Page navigation example"
+			     style="width: initial">
+			  <ul class="pagination">
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!contracts.hasPrevious() ? ' disabled' : ''}"
+				       th:href="@{/contract(page=${contracts.number - 1}, q=${q})}"
+				    >
+					        Previous
+				    </a>
+			    </li>
+				  <li class="page-item btn btn-light" th:text="${contracts.number + 1}"></li>
+				  <li class="page-item btn btn-light disabled">/</li>
+				  <li class="page-item btn btn-light disabled"
+				      th:text="${contracts.totalPages}"></li>
+				  <span>&nbsp;</span>
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!contracts.hasNext() ? ' disabled' : ''}"
+				       th:href="@{/contract(page=${contracts.number + 1}, q=${q})}"
+				    >
+					        Next
+				    </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		</div>
+	</div>
+	
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+</body>
+</html>

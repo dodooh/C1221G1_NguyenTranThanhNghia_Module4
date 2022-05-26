@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        div table
+        {
+            display: block;
+            text-align: center;
+        }
+        table
+        {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <div>
+        <h1>List</h1>
+        <p th:if="${message != null}" th:text="${message}"></p>
+        <h3><a href="/create">create</a></h3>
+        <table border="1">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+            </tr>
+            <tr th:each="user : ${users}">
+               <td th:text="${user.firstName}"></td>
+               <td th:text="${user.lastName}"></td>
+               <td th:text="${user.dayOfBirth}"></td>
+               <td th:text="${user.phoneNumber}"></td>
+               <td th:text="${user.email}"></td>
+            </tr>
+        </table>
+    </div>
+</center>
+</body>
+</html>

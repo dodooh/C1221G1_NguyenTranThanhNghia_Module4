@@ -1,0 +1,253 @@
+html, body {
+  background: #FCEEB5;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.card {
+  width: 450px;
+  height: 250px;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem;
+}
+
+.card h3 {
+  text-align: center;
+}
+
+.card .additional {
+  position: absolute;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(#dE685E, #EE786E);
+  transition: width 0.4s;
+  overflow: hidden;
+  z-index: 2;
+}
+
+
+
+
+.card:hover .additional {
+  width: 100%;
+  border-radius: 0 5px 5px 0;
+}
+
+.card .additional .user-card {
+  width: 150px;
+  height: 100%;
+  position: relative;
+  float: left;
+  /*padding: 1rem;*/
+}
+
+.card .additional .user-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10%;
+  right: -2px;
+  height: 80%;
+  border-left: 2px solid rgba(0,0,0,0.025);
+}
+
+.card .additional .user-card .level,
+.card .additional .user-card .points {
+  top: 15%;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  font-weight: bold;
+  background: rgba(0,0,0,0.15);
+  padding: 0.125rem 0.75rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.card .additional .user-card .points {
+  top: 85%;
+}
+
+.card .additional .user-card img {
+  top: 50%;
+}
+
+.card .additional .more-info {
+  width: 300px;
+  float: left;
+  position: absolute;
+  left: 150px;
+  height: 100%;
+  padding-top: 1rem;
+}
+
+.card .additional .more-info h3 {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+
+
+.card .additional .coords {
+  margin: 0 1rem;
+  color: #fff;
+  font-size: 1rem;
+}
+
+
+
+.card .additional .coords span + span {
+  float: right;
+}
+
+.card .additional .stats {
+  font-size: 2rem;
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #fff;
+}
+
+
+
+.card .additional .stats > div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .additional .stats i {
+  display: block;
+}
+
+.card .additional .stats div.title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card .additional .stats div.value {
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1rem;
+}
+
+.card .additional .stats div.value.infinity {
+  font-size: 2.5rem;
+}
+
+.card .general {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 1rem;
+
+}
+/*VILLA*/
+
+.card.villa .additional {
+  background: linear-gradient(#50b5fb, #399af1);
+}
+.card.villa .additional .more-info h3 {
+  color: #274266;
+}
+
+
+.card.villa .additional .coords {
+  color: #274266;
+}
+
+.card.villa .additional .stats {
+  color: #274266;
+}
+
+.card.villa .general {
+  background-image: url("https://149345965.v2.pressablecdn.com/wp-content/uploads/img-hotels-country-inn-hotel.jpg");
+  background-size: cover;
+}
+
+.card.villa img {
+  content: url("../img/villa.svg");
+}
+/*HOUSE*/
+
+.card.house .additional {
+  background: linear-gradient(#f1bf8f, #f0a965);
+}
+
+.card.house .additional .more-info h3 {
+  color: #88490E;
+}
+
+.card.house .additional .coords {
+  color: #88490E;
+}
+
+.card.house .additional .stats {
+  color: #88490E;
+}
+
+.card.house .general {
+  background-image: url("https://static01.nyt.com/images/2022/02/20/realestate/16IHH-BRITISH-COLUMBIA-slide-KCA7/16IHH-BRITISH-COLUMBIA-slide-KCA7-superJumbo.jpg?quality=75&auto=webp");
+  background-size: cover;
+}
+
+.card.house img {
+  content: url("../img/house.svg");
+}
+
+/*ROOM*/
+
+.card.room .additional {
+  background: linear-gradient(#fee69a, #f9d563);
+}
+
+.card.room .additional .more-info h3 {
+  color: #765316;
+}
+
+.card.room .additional .coords {
+  color: #765316;
+}
+
+.card.room .additional .stats {
+  color: #765316;
+}
+
+.card.room .general {
+  background-image: url("../img/room.jpg");
+  background-size: cover;
+}
+
+.card.room img {
+  content: url("../img/room.svg");
+}
+
+
+.card .general .more {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9em;
+}
+
+.card .general h3 {
+  color: #ffffffff
+}
+
+

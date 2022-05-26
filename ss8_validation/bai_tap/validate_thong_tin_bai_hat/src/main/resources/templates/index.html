@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Song</title>
+</head>
+<body>
+<center>
+  <h1>Song List</h1>
+  <a href="/create">Add New Song</a>
+  <table border="1">
+    <tr>
+      <th>Id</th>
+      <th>Song</th>
+      <th>Artist</th>
+      <th>Genre</th>
+      <th>Function</th>
+    </tr>
+    <tr th:each="song, loop : ${songs}">
+      <td th:text="${loop.count}"></td>
+      <td th:text="${song.name}"></td>
+      <td th:text="${song.artist}"></td>
+      <td th:text="${song.genre}"></td>
+      <td>
+        <a href="">Edit</a>
+        <a href="">Delete</a>
+      </td>
+    </tr>
+  </table>
+</center>
+</body>
+</html>

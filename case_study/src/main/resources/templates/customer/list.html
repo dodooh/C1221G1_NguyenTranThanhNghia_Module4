@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 pt-2">
+		
+		<div class="alert alert-success"
+		     th:if="${#request.getAttribute('ok_message') != null}"
+		     th:text="${#request.getAttribute('ok_message')}">
+		</div>
+		
+		<div class="d-flex justify-content-between mb-2">
+				<div>
+					<a class="btn btn-success"
+					   th:href="@{'/customer/create'}"
+					   role="button">
+				    +
+				    <span th:text="${mainObject}"></span>
+			    </a>
+				</div>
+				<form th:action="@{/customer}" class="form-inline">
+					<div class="form-group mx-sm-2 mb-2">
+					  <select  class="custom-select" name="sort">
+								<option value="name">By Name</option>
+								<option value="dayOfBirth">By Day Of Birth</option>
+								<option value="mail">By Email</option>
+					  </select>
+					</div>
+					<div class="form-group mx-sm-2 mb-2">
+					  <select  class="custom-select" name="dir">
+								<option value="asc">Ascending</option>
+								<option value="desc">Descending</option>
+					  </select>
+					</div>
+					<button type="submit" class="btn btn-primary mb-2">Sort</button>
+				</form>
+			</div>
+				<table class="table table-light table-bordered small">
+					<thead class="thead thead-dark text-center">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">C_Code</th>
+							<th scope="col">
+								<a href=""><i class='bx bxs-up-arrow'></i></a>
+								Name
+								<a href=""><i class='bx bxs-down-arrow'></i></a></th>
+							<th scope="col">Gender</th>
+							<th scope="col">DOB</th>
+							<!--							<th scope="col">National Id</th>-->
+							<!--							<th scope="col">Address</th>-->
+							<!--							<th scope="col">Phone</th>-->
+							<th scope="col">Email</th>
+							<th scope="col">Customer Type</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="customer, loop : ${customers}">
+							<td th:text="${(customers.number * 5) + loop.count}"></td>
+							<td th:text="${customer.id}">
+							</td>
+							<td th:text="${customer.name}"></td>
+							<td th:text="${customer.gender == 1 ? 'Male' : 'Female'}"></td>
+							<td th:text="${customer.dayOfBirth}"></td>
+							<!--							<td th:text="${customer.nationalId}"></td>-->
+							<!--							<td th:text="${customer.address}"></td>-->
+							<!--							<td th:text="${customer.phone}"></td>-->
+							<td th:text="${customer.mail}"></td>
+							<td th:text="${customer.customerType.customerTypeName}"></td>
+							<td>
+								<button type="button" class="border-0 bg-transparent viewSpan" data-toggle="modal"
+								        th:attr="onclick=|viewPrepare(
+								          '${customer.name}',' ${customer.gender}', '${customer.dayOfBirth}',
+								          '${customer.nationalId}', '${customer.address}', '${customer.phone}',
+								          '${customer.mail}', '${customer.customerType.customerTypeName}')|"
+								        data-target="#viewModal">
+									<i class='bx bx-search-alt-2 bx-border bx-sm'></i>
+								</button>
+								
+								<a class="editSpan text-black"
+								   th:href="@{/customer/update/{id}(id=${customer.id})}">
+									<i class='bx bx-wrench bx-border bx-sm'></i>
+								</a>
+								<button type="button" class="border-0 bg-transparent deleteSpan"
+								        data-toggle="modal" data-target="#deleteModal"
+								        th:attr="onclick=|deletePrepare('${customer.id}')|">
+                        <i class='bx bx-trash bx-border bx-sm'></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		
+		
+		<!--Phan Trang-->
+		<div class="pagination-control">
+			<div class="row d-flex justify-content-center">
+			<nav th:fragment="pagination" aria-label="Page navigation example"
+			     style="width: initial">
+			  <ul class="pagination">
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!customers.hasPrevious() ? ' disabled' : ''}"
+				       th:href="@{/customer(page=${customers.number - 1}, sort=${sort}, dir=${dir})}"
+				    >
+					        Previous
+				    </a>
+			    </li>
+				  <li class="page-item btn btn-light" th:text="${customers.number + 1}"></li>
+				  <li class="page-item btn btn-light disabled">/</li>
+				  <li class="page-item btn btn-light disabled"
+				      th:text="${customers.totalPages}"></li>
+				  <span>&nbsp;</span>
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!customers.hasNext() ? ' disabled' : ''}"
+				       th:href="@{/customer(page=${customers.number + 1}, sort=${sort}, dir=${dir})}"
+				    >
+					        Next
+				    </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+	     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete?</h5>
+	                <button type="button" class="close text-light" data-dismiss="modal"
+	                        aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <form th:action="@{/customer/delete}" method="post">
+	                <div class="modal-body">
+	                    <input type="hidden" id="id_delete" name="id">
+	                    <div id="name_delete"></div>
+	                    <div class="text-danger">WARNING: YOU CAN NOT ROLLBACK AFTER DELETE!!!</div>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary"
+	                            data-dismiss="modal">NO</button>
+	                    <button type="submit" class="btn btn-danger">YES</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+		</div>
+	
+		
+	<div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
+	     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 id="name_view" class="modal-title"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+        </div>
+		    <div class="modal-body">
+          <p>Gender: <span id="gender_view"></span></p>
+          <p>DOB: <span id="dob_view"></span></p>
+          <p>ID: <span id="national_view"></span></p>
+          <p>Address: <span id="address_view"></span></p>
+          <p>Phone: <span id="phone_view"></span></p>
+          <p>Mail: <span id="mail_view"></span></p>
+          <p>Type: <span id="type_view"></span></p>
+      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+	<script>
+		function deletePrepare(id) {
+      $('#id_delete').val(id);
+      $('#name_delete').text(id);
+    }
+
+				
+    function viewPrepare(name, gender, dob,nationalId,address,phone,mail, type) {
+      $('#name_view').text(name);
+      console.log(gender)
+      $('#gender_view').text(gender == 1 ? "male" : "female");
+      $('#dob_view').text(dob);
+      $('#national_view').text(nationalId);
+      $('#address_view').text(address);
+      $('#phone_view').text(phone);
+      $('#mail_view').text(mail);
+      $('#type_view').text(type);
+      
+      
+    }
+	</script>
+</body>
+</html>

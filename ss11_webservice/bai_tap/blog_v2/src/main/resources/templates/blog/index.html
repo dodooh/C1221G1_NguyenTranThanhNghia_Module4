@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	  <meta charset="UTF-8">
+	  <title>BlogHub</title>
+	  <th:block th:replace="~{/blog/layout :: top_css}"></th:block>
+		<style>
+			a.disabled {
+              pointer-events: none;
+              cursor: default;
+            }
+		</style>
+</head>
+<body class="bg-dark">
+<div class="container bg-dark shadowed">
+        <nav th:replace="~{/blog/layout :: navbar}"></nav>
+        <th:block th:if="${message != null}">
+            <div class="alert alert-success" th:text="${message}"></div>
+        </th:block>
+	
+		<div class="container">
+			<a th:href="@{/blog(q=${q}, sort='title,asc')}">
+				<i class="fas fa-sort-amount-down"></i>
+			</a>
+		</div>
+		
+        <div class="container-fluid shadowed my-2">
+	        <div class="row">
+		        <div class="col-3" th:each="blogObj : ${blogs}">
+	                <div class="card my-2" style="padding: 0;">
+		                  <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+		                        <img class="img-fluid" th:src="@{${blogObj.imgLink}}"/>
+		                        <a href="#!">
+		                          <div class="mask"
+		                               style="background-color: rgba(251, 251, 251, 0.15);"></div>
+		                        </a>
+		                  </div>
+		                  <div class="d-flex flex-column card-body px-3 py-3 bg-light">
+		                        <h5 class="card-title w-100">
+		                            <span th:text="${blogObj.title}"></span>
+		                            <span class="badge bg-info"
+		                                  th:text="${blogObj.category.categoryName}"></span>
+		                        </h5>
+		                        <div>
+									<p class="card-subtitle fw-lighter text-white mb-2 text-muted">
+		                            <span>Author: </span><span th:text="${blogObj.author}"></span>
+		                            </p>
+								</div>
+							  <p class="card-text fst-italic"
+							     th:text="${#strings.abbreviate(blogObj.content,150)}"></p>
+		                      <div class="mt-auto">
+		                          <a class="btn btn-primary float-left" href="#">Read</a>
+		                          <a class="btn btn-warning float-right"
+		                             th:href="@{/blog/update/{id}(id=${blogObj.id})}">
+		                              <i class="far fa-edit"></i>
+		                          </a>
+		                          <button
+			                          th:attr="onclick=|deleteModal('${blogObj.id}', '${blogObj.title}')|"
+			                          type="button" class="btn btn-danger float-right"
+			                          data-toggle="modal"
+			                          data-target="#exampleModal">
+		                              <i class="fas fa-trash"></i>
+		                          </button>
+		                      </div>
+		                  </div>
+		                  <div class="card-footer text-muted px-3 py-3">
+		                        Created At <span class="card-text text-italic"
+		                                         th:text="${blogObj.createDate}"></span>
+		                  </div>
+	                 </div>
+			        </div>
+                </div>
+		        
+	        </div>
+		<div class="row d-flex justify-content-center">
+			<nav th:fragment="pagination" aria-label="Page navigation example"
+			     style="width: initial">
+			  <ul class="pagination">
+			    <li class="page-item">
+				    
+					    <a class="btn btn-light"
+					       th:attrappend="class=${!blogs.hasPrevious() ? ' disabled' : ''}"
+					       th:href="@{/blog(page=${blogs.number - 1}, q=${q}, sort=${sort})}"
+					    >
+						        Previous
+						    
+					    </a>
+			    </li>
+				  <span>&nbsp;</span>
+			    <li class="page-item">
+					    <a class="btn btn-light"
+					       th:attrappend="class=${!blogs.hasNext() ? ' disabled' : ''}"
+					       th:href="@{/blog( page=${blogs.number + 1}, q=${q}, sort=${sort} )}"
+					    >
+						        Next
+					    </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form th:action="@{/delete}" method="post">
+			  <div class="modal-body">
+					<input type="hidden" name="id" id="idToDelete">
+				  <p id="nameToDelete"></p>
+				  <p>DO YOU WANT TO DELETE THIS Blog</p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+				<button type="submit" class="btn btn-danger">YES</button>
+			  </div>
+		</form>
+    </div>
+  </div>
+</div>
+<script>
+	function deleteModal(id, name, price) {
+      document.getElementById("idToDelete").value = id;
+      document.getElementById("nameToDelete").innerText = name;
+    }
+</script>
+<!-- MDB -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+<th:block th:replace="~{/blog/layout :: bot_js}">
+</th:block>
+</body>
+</html>

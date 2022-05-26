@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 bg-light">
+		<div class="row">
+			<div class="col-sm-3">
+				<a class="btn btn-secondary" th:href="@{/customer}">Back to List</a>
+			</div>
+		</div>
+		<div class="container d-flex flex-column justify-content-center" data-theme="dark">
+			<form method="post" th:object="${customerDto}" th:action="@{${#request.getServletPath()}}">
+				<div class="form-group row">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-9">
+						<h2>Create New <span th:text="${mainObject}"></span></h2>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="name">Customer Name</label>
+					<div class="col-sm-6">
+						<input type="text" id="name" class="form-control" th:field="*{name}"
+						       placeholder="Ex: Nguyen Van A">
+						<span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right">Gender</label>
+					<div class="col-sm-6">
+						<label class="col-form-label" for="MaleRadio">Male</label>
+						<input type="radio" th:field="*{gender}" id="MaleRadio" value="1">
+						<label class="col-form-label" for="MaleRadio">Female</label>
+						<input type="radio" th:field="*{gender}" id="FemaleRadio" value="0">
+						<span style="color: red" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="dayOfBirth">Day Of Birth</label>
+					<div class="col-sm-3">
+						<input type="text" id="dayOfBirth" class="form-control" th:field="*{dayOfBirth}"
+						       placeholder="Format: 26/01/1997">
+						<span style="color: red" th:if="${#fields.hasErrors('dayOfBirth')}" th:errors="*{dayOfBirth}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="nationalId">National ID</label>
+					<div class="col-sm-3">
+						<input type="text" id="nationalId" class="form-control" th:field="*{nationalId}"
+						       placeholder="Ex: 123456789">
+						<span style="color: red" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="address">Address</label>
+					<div class="col-sm-6">
+						<input type="text" id="address" class="form-control" th:field="*{address}"
+						       placeholder="Ex: 18 Nguyen Chi Thanh">
+						<span style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="phone">Phone</label>
+					<div class="col-sm-3">
+						<input type="text" id="phone" class="form-control" th:field="*{phone}"
+						       placeholder="Ex: 0912345678">
+						<span style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+					</div>
+			    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="email">Email</label>
+					<div class="col-sm-6">
+						<input type="text" id="email" class="form-control" th:field="*{mail}"
+						       placeholder="Ex: codegym123@gmail.co">
+						<span style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></span>
+					</div>
+			    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="customerType">Customer Type</label>
+					<div class="col-sm-3">
+						<select class="custom-select" th:field="*{customerType}" id="customerType">
+							<option value="">Choose Customer Type</option>
+							<option th:each="c : ${customerTypes}" th:value="${c.id}" th:text="${c.customerTypeName}"></option>
+						</select>
+						<span style="color: red" th:if="${#fields.hasErrors('customerType')}" th:errors="*{customerType}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right"></label>
+					<div class="col-sm-3">
+						<button type="submit" class="btn btn-success">Submit</button>
+					</div>
+			    </div>
+			</form>
+		</div>
+	</div>
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+</body>
+</html>

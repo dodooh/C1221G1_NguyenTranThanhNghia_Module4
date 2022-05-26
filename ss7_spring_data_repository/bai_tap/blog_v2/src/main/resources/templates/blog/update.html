@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>BlogHub</title>
+    <th:block th:replace="~{layout :: top_css}"></th:block>
+</head>
+<body class="bg-dark">
+<div class="container bg-dark shadowed">
+        <nav th:replace="~{layout :: navbar}"></nav>
+        <a class="btn btn-dark" role="button" href="/">Back</a>
+        <div class="container-fluid shadowed my-2 px-2 py-2">
+              <form method="post" th:action="@{/blog/update}" th:object="${blog}">
+                  <input type="hidden" th:field="*{id}">
+                  <div class="mb-3 row">
+                        <div class="col-3 text-right">
+                            <label class="form-label text-light" for="title">Title</label>
+                        </div>
+                        <div class="col-9">
+                            <input class="form-control" id="title" th:field="*{title}" type="text">
+                        </div>
+                  </div>
+                  <div class="mb-3 row">
+                        <div class="col-3 text-right">
+                            <label class="form-label text-light" for="content">Content</label>
+                        </div>
+                        <div class="col-9">
+                            <textarea class="form-control" id="content" rows="5"
+                                      th:field="*{content}"></textarea>
+                        </div>
+                  </div>
+                  <div class="mb-3 row">
+                        <div class="col-3 text-right">
+                            <label class="form-label text-light" for="category">Category</label>
+                        </div>
+                        <div class="col-9">
+                            <select id="category" th:field="*{category}">
+                                <option th:each="category : ${categories}" th:text="${category.categoryName}"
+                                        th:value="${category.id}"></option>
+                            </select>
+                        </div>
+                  </div>
+                  <div class="mb-3 row">
+                        <div class="col-3 text-right">
+                            <label class="form-label text-light" for="imgLink">Link</label>
+                        </div>
+                        <div class="col-9">
+                             <input class="form-control" id="imgLink" th:field="*{imgLink}"
+                                    type="text">
+                        </div>
+                  </div>
+                  <div class="mb-3 row">
+                        <div class="col-3 text-right">
+                            <label class="form-label" for="author">Author</label>
+                        </div>
+                        <div class="col-9">
+                            <input class="form-control" id="author" th:field="*{author}"
+                                   type="text">
+                        </div>
+                  </div>
+                  <div class="mb-3 row">
+                        <div class="col-3 text-right">
+                        </div>
+                        <div class="col-9">
+                              <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                  </div>
+            </form>
+        </div>
+</div>
+
+<th:block th:replace="~{layout :: bot_js}"></th:block>
+</body>
+</html>

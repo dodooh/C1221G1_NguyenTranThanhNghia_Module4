@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 px-5 py-5">
+		<div class="row">
+			<div class="col-sm-3">
+				<a class="btn btn-secondary" th:href="@{/contract}">Back to List</a>
+			</div>
+		</div>
+		<div class="container d-flex flex-column justify-content-center" data-theme="dark">
+			<form method="post" th:object="${contractDto}" th:action="@{${#request.getServletPath()}}">
+				<div class="text-center mb-3">
+						<h2>Create New <span th:text="${mainObject}"></span></h2>
+		    </div>
+				<div class="row d-flex justify-content-center">
+					<div class="col-10">
+						<div class="row mb-3">
+									<div class="col-6">
+											<label>Start Date
+												<input style="width: 100%" type="date" th:field="*{startDate}" autocomplete="off"/>
+											</label>
+									</div>
+									<div class="col-6">
+											<label>End Date
+											<input style="width: 100%" type="date" th:field="*{endDate}" autocomplete="off"/>
+											</label>
+									</div>
+						</div>
+						<div class="row mb-3">
+									<div class="col-6">
+											<input style="width: 100%" type="text" th:field="*{deposit}" placeholder="Deposit" autocomplete="off"/>
+									</div>
+									<div class="col-6">
+											<input style="width: 100%" type="text" th:field="*{totalMoney}" placeholder="Total Money" autocomplete="off"/>
+									</div>
+									
+						</div>
+						<div class="row mb-3">
+									<div class="col-4">
+										<label>Customer
+											<select class="form-select" style="width: 100%; height: 30px" th:field="*{customer}">
+												<option value="">--Choose Customer--</option>
+												<option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.name}"></option>
+											</select>
+											</label>
+									</div>
+									<div class="col-4">
+											<label>Employee
+												<select class="form-select" style="width: 100%; height: 30px" th:field="*{employee}">
+													<option value="">--Choose Employee--</option>
+													<option th:each="e : ${employees}" th:value="${e.id}" th:text="${e.name}"></option>
+												</select>
+											</label>
+											</div>
+									<div class="col-4">
+												<label>Service
+														<select class="form-select" style="width: 100%; height: 30px" th:field="*{facility}">
+															<option value="">--Choose Service--</option>
+															<option th:each="f : ${facilities}" th:value="${f.id}" th:text="${f.name}"></option>
+														</select>
+												</label>
+									</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="text-center">
+						<button type="submit" class="btn btn-success">Submit</button>
+		    </div>
+			</form>
+		</div>
+	</div>
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+</body>
+</html>

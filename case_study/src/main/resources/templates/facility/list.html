@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 pt-2">
+		
+		<div class="alert alert-success"
+		     th:if="${#request.getAttribute('ok_message') != null}"
+		     th:text="${#request.getAttribute('ok_message')}">
+		</div>
+		
+		<div class="d-flex justify-content-between mb-2">
+				<div>
+					<a class="btn btn-success"
+					   th:href="@{'/facility/create'}"
+					   role="button">
+				    +
+				    <span th:text="${mainObject}"></span>
+			    </a>
+				</div>
+			</div>
+		<div class="row d-flex justify-content-center">
+					<div class="col-md-5" th:each="facility, loop : ${facilities}">
+						 <div class="card villa" th:if="${facility.facilityType.id == 1}">
+                <div class="additional">
+						        <div class="user-card">
+							        <div class="level center">
+							          <span th:text="${facility.name}"></span>
+							        </div>
+							        <div class="points center">
+								        <span th:text="${facility.id}"></span>
+							        </div>
+							        <img width="110" height="110" class="center"/>
+						        </div>
+						        <div class="more-info">
+							        <div class="coords">
+							          <span>Rent Type</span>
+							          <span th:text="${facility.rentType.rentTypeName}"></span>
+							        </div>
+							        <div class="coords">
+							          <span>Floor</span>
+							          <span th:text="${facility.numberOfFloors}"></span>
+							        </div>
+							        <div class="coords">
+							          <span>Area</span>
+							          <span><span th:text="${facility.area}"></span>&nbsp;m<sup>2</sup> </span>
+							        </div>
+							        <div class="coords">
+								        <span>Max</span>
+							          <span><span th:text="${facility.maxPeople}"></span>&nbsp;people</span>
+							        </div>
+							        <div class="coords">
+								        <span>Convenient</span>
+							          <span th:text="${facility.otherConvenience}"></span>
+							        </div>
+							        <div class="coords">
+								        <span>Pool Area</span>
+								        <span><span th:text="${facility.poolArea}"></span>&nbsp;m<sup>2</sup></span>
+							        </div>
+							        <div class="stats">
+								          <div>
+									            <i class='bx bxs-trophy'></i>
+									            <div class="value" th:text="${facility.facilityType.facilityTypeName}"></div>
+								          </div>
+								          <div>
+									            <i class='bx bxs-dollar-circle' ></i>
+									            <div class="value" th:text="${#numbers.formatDecimal(facility.cost, 0, 'COMMA', 0, 'POINT')}"></div>
+								          </div>
+						            </div>
+					        </div>
+					      </div>
+						    <div class="general">
+						      	<h3></h3>
+						        <p></p>
+						      <span class="more"></span>
+						    </div>
+					  </div>
+							<div class="card house" th:if="${facility.facilityType.id == 2}">
+                <div class="additional">
+						        <div class="user-card">
+							        <div class="level center">
+							          <span th:text="${facility.name}"></span>
+							        </div>
+							        <div class="points center">
+								        <span th:text="${facility.id}"></span>
+							        </div>
+							        <img width="110" height="110" class="center"/>
+						        </div>
+						        <div class="more-info">
+							        <div class="coords">
+							          <span>Rent Type</span>
+							          <span th:text="${facility.rentType.rentTypeName}"></span>
+							        </div>
+							        <div class="coords">
+							          <span>Floor</span>
+							          <span th:text="${facility.numberOfFloors}"></span>
+							        </div>
+							        <div class="coords">
+							          <span>Area</span>
+							          <span><span th:text="${facility.area}"></span>&nbsp;m<sup>2</sup> </span>
+							        </div>
+							        <div class="coords">
+								        <span>Max</span>
+							          <span><span th:text="${facility.maxPeople}"></span>&nbsp;people</span>
+							        </div>
+							        <div class="coords">
+								        <span>Convenient</span>
+							          <span th:text="${facility.otherConvenience}"></span>
+							        </div>
+							        <div class="stats">
+								          <div>
+									            <i class='bx bxs-trophy'></i>
+									            <div class="value" th:text="${facility.facilityType.facilityTypeName}"></div>
+								          </div>
+								          <div>
+									            <i class='bx bxs-dollar-circle' ></i>
+									            <div class="value" th:text="${#numbers.formatDecimal(facility.cost, 0, 'COMMA', 0, 'POINT')}"></div>
+								          </div>
+						            </div>
+					        </div>
+					      </div>
+						    <div class="general">
+						      	<h3></h3>
+						        <p></p>
+						      <span class="more"></span>
+						    </div>
+					  </div>
+						<div class="card room" th:if="${facility.facilityType.id == 3}">
+                <div class="additional">
+						        <div class="user-card">
+							        <div class="level center">
+							          <span th:text="${facility.name}"></span>
+							        </div>
+							        <div class="points center">
+								        <span th:text="${facility.id}"></span>
+							        </div>
+							        <img width="110" height="110" class="center"/>
+						        </div>
+						        <div class="more-info">
+							        <div class="coords">
+							          <span>Rent Type</span>
+							          <span th:text="${facility.rentType.rentTypeName}"></span>
+							        </div>
+							        <div class="coords">
+							          <span>Floor</span>
+							          <span th:text="${facility.numberOfFloors}"></span>
+							        </div>
+							        <div class="coords">
+							          <span>Area</span>
+							          <span><span th:text="${facility.area}"></span>&nbsp;m<sup>2</sup> </span>
+							        </div>
+							        <div class="coords">
+								        <span>Max</span>
+							          <span><span th:text="${facility.maxPeople}"></span>&nbsp;people</span>
+							        </div>
+							        <div class="coords">
+								        <span>Free Service</span>
+								        <span th:text="${facility.freeService}"></span>
+							        </div>
+							        <div class="stats">
+								          <div>
+									            <i class='bx bxs-trophy'></i>
+									            <div class="value" th:text="${facility.facilityType.facilityTypeName}"></div>
+								          </div>
+								          <div>
+									            <i class='bx bxs-dollar-circle' ></i>
+									            <div class="value" th:text="${#numbers.formatDecimal(facility.cost, 0, 'COMMA', 0, 'POINT')}"></div>
+								          </div>
+						            </div>
+					        </div>
+					      </div>
+						    <div class="general">
+						      	<h3></h3>
+						        <p></p>
+						      <span class="more"></span>
+						    </div>
+					  </div>
+					</div>
+				</div>
+	</div>
+	
+	
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+</body>
+</html>

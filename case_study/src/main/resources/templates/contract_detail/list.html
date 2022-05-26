@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 pt-2">
+		
+		<div class="alert alert-success"
+		     th:if="${#request.getAttribute('ok_message') != null}"
+		     th:text="${#request.getAttribute('ok_message')}">
+		</div>
+		
+		<div class="d-flex justify-content-between mb-2">
+				<div>
+					<a class="btn btn-success"
+					   th:href="@{'/contract/create'}"
+					   role="button">
+				    +
+				    <span th:text="${mainObject}"></span>
+			    </a>
+				</div>
+			</div>
+				<table class="table table-light table-bordered small">
+					<thead class="thead thead-dark text-center">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Contract Code</th>
+							<th scope="col">Customer Name</th>
+							<th scope="col">Start Date</th>
+							<th scope="col">End Date</th>
+							<th scope="col">Extra Service</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Total Money</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cd, loop : ${contractDetails}">
+							<td th:text="${(contractDetails.number * 10) + loop.count}"></td>
+							<td th:text="${cd.contract.id}"></td>
+							<td th:text="${cd.contract.customer.name}"></td>
+							<td th:text="${cd.contract.startDate}"></td>
+							<td th:text="${cd.contract.endDate}"></td>
+							<td th:text="${cd.serviceExtra.name}"></td>
+							<td th:text="${cd.quantity}"></td>
+							<td th:text="${#numbers.formatDecimal(cd.quantity * cd.serviceExtra.cost, 0, 'COMMA', 0, 'POINT')}"></td>
+						</tr>
+					</tbody>
+				</table>
+		
+		
+		<!--Phan Trang-->
+		<div class="pagination-control">
+			<div class="row d-flex justify-content-center">
+			<nav th:fragment="pagination" aria-label="Page navigation example"
+			     style="width: initial">
+			  <ul class="pagination">
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!contractDetails.hasPrevious() ? ' disabled' : ''}"
+				       th:href="@{/detail-contract(page=${contractDetails.number - 1}, q=${q})}"
+				    >
+					        Previous
+				    </a>
+			    </li>
+				  <li class="page-item btn btn-light" th:text="${contractDetails.number + 1}"></li>
+				  <li class="page-item btn btn-light disabled">/</li>
+				  <li class="page-item btn btn-light disabled"
+				      th:text="${contractDetails.totalPages}"></li>
+				  <span>&nbsp;</span>
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!contractDetails.hasNext() ? ' disabled' : ''}"
+				       th:href="@{/detail-contract(page=${contractDetails.number + 1}, q=${q})}"
+				    >
+					        Next
+				    </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		</div>
+	</div>
+	
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+</body>
+</html>

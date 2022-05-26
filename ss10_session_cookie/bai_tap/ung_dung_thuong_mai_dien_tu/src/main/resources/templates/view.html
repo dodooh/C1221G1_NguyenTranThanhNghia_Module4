@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Detail </title>
+		<th:block th:replace="~{layout :: css}"></th:block>
+
+</head>
+<body>
+<div class="display-2 my-2 text-center">Detail</div>
+<div class="container">
+	<a href="/shop" class="btn btn-secondary">Back To Shop</a>
+	<div class="row">
+		<div class="col-4">
+			<img th:src="@{${product.image}}" alt="" th:width="444" th:height="444">
+		</div>
+		<div class="col-8">
+			<div class="d-flex flex-column justify-content-start text-around">
+				<h1 class="display-6" th:text="${product.name}"></h1>
+				<h3 th:text="${product.price} + ${' VND'}" class="card-text text-danger"></h3>
+				<p th:text="${'Product Code #'} + ${product.code}" class="card-text small"></p>
+				<p>
+					<li>Galaxy M51 thuộc thế hệ Galaxy M đến từ SamSung</li>
+					<li>Ấn tượng ban đầu với màn hình của Galaxy M51 là kiểu màn hình Infinity-O</li>
+					<li>Ngoài ra, máy còn sở hữu công nghệ màn hình Super AMOLED Plus mang đến </li>
+				</p>
+				<form th:action="@{/add/{id}(id=${product.code})}">
+					<input type="hidden" name="action" value="view">
+					<div class="d-flex my-2">
+						<button type="button" class="btn btn-danger" onclick="decrement()">-</button>
+						<input name="quantity" class="form-input" value="1" id=demoInput type=number min=1 max=100>
+						<button type="button" class="btn btn-danger" onclick="increment()">+</button>
+					</div>
+					<button type="submit" class="btn btn-danger my-2">Add to Cart</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--	<table border="1">-->
+	<!--		<tr>-->
+	<!--			<td th:text="${product.name}"></td>-->
+	<!--		</tr>-->
+	<!--		<tr>-->
+	<!--			<td>-->
+	<!--				<img th:src="@{${product.image}}" alt="" th:width="444" th:height="444">-->
+	<!--			</td>-->
+	<!--		</tr>-->
+	<!--		<tr>-->
+	<!--			<td th:text="${'Ma SP: '} + ${product.code}"></td>-->
+	<!--		</tr>-->
+	<!--		<tr>-->
+	<!--			<td th:text="${'VND: '} + ${product.price}"></td>-->
+	<!--		</tr>-->
+	<!--		<tr>-->
+	<!--			<td>-->
+	<!--				<a th:href="@{/add/__${product.code}__(action='view')}">Add To Cart</a>-->
+	<!--			</td>-->
+	<!--		</tr>-->
+	<!--	</table>-->
+</div>
+
+<th:block th:replace="~{layout :: js}"></th:block>
+<script>
+   function increment() {
+     document.getElementById('demoInput').stepUp();
+   }
+
+   function decrement() {
+     document.getElementById('demoInput').stepDown();
+   }
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+			 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Product Management</title>
+	<th:block th:replace="~{layout :: link_css}">
+	</th:block>
+</head>
+<body>
+<!--HEADER-->
+<!--<div th:replace="~{layout :: navbar}"></div>-->
+<!--SUBPAGE HEAD-->
+<!--<div th:replace="~{layout :: subhead}"></div>-->
+<div class="highlight-bg has-margin-bottom">
+  <div class="container">
+    <div class="row">
+		<div class="col-6 text-left">
+			<h3>List Products</h3>
+		</div>
+		<div class="col-6 text-right">
+			<form action="/product/search">
+			
+			<input type="search" name="q">
+				<input class="btn btn-info" type="submit" value="Search">
+			</form>
+		</div>
+	</div>
+	  <p th:text="${msg != null} ? ${msg} : ''"></p>
+    <a th:href="@{/product/create}" class="btn btn-success">Create New Product</a>
+  </div>
+</div>
+
+<!--MAIN BODY-->
+<div class="container theme-showcase min-vh-100" role="main">
+<table class="table table-lg table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Manufacture</th>
+            <th>Function</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="product, loop : ${productList}">
+            <td th:text="${loop.count}"></td>
+            <td>
+				<a th:href="@{/product/{id}(id=${product.id})}"><span
+					th:text="${product.name}"></span>	</a>
+			</td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.manufactor}"></td>
+			  <td>
+				  <a th:href="@{/product/update/{id}(id=${product.id})}" class="btn btn-warning">Update</a>
+				  <!-- Button trigger modal -->
+				<button
+					th:attr="onclick=|deleteModal('${product.id}', '${product.name}', '${product.price}')|"
+					type="button" class="btn btn-danger" data-toggle="modal"
+					data-target="#exampleModal">
+				  Delete
+				</button>
+				  <!--				  <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>-->
+			  </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+	 aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form action="/product/delete" method="post">
+			  <div class="modal-body">
+					<input type="hidden" name="id" id="idToDelete">
+					<input type="text" disabled id="nameToDelete">
+					<input type="text" disabled id="priceToDelete">
+				  <p>DO YOU WANT TO DELETE THIS PRODUCT</p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+				<button type="submit" class="btn btn-danger">YES</button>
+			  </div>
+		</form>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: bottom_script}">
+</th:block>
+<script>
+	function deleteModal(id, name, price) {
+      document.getElementById("idToDelete").value = id;
+      document.getElementById("nameToDelete").value = name;
+      document.getElementById("priceToDelete").value = price;
+    }
+</script>
+
+</body>
+</html>

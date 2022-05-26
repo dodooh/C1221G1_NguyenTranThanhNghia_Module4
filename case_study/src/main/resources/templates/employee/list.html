@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/card.css">
+</head>
+<body id="body-pd">
+	<header th:replace="~{layout :: l_header}"></header>
+	<div th:replace="~{layout :: l_navbar}"></div>
+	<div class="height-100 pt-2">
+			<div class="alert alert-success"
+			     th:if="${#request.getAttribute('success_message') != null}"
+			     th:text="${#request.getAttribute('success_message')}">
+			</div>
+			<div class="alert alert-danger"
+		     th:if="${#request.getAttribute('error_message') != null}"
+		     th:text="${#request.getAttribute('error_message')}">
+			</div>
+			
+			<div class="d-flex justify-content-between">
+				<div>
+					<a class="btn btn-success"
+					   th:href="@{'/employee/create'}"
+					   role="button">
+				    +
+				    <span th:text="${mainObject}"></span>
+			    </a>
+				</div>
+				<form th:action="@{/employee}" class="form-inline">
+					<div class="form-group mb-2">
+					  <label class="form-label mx-sm-3 " for="name">Name</label>
+						<input type="text" id="name" class="form-control" name="name"
+						       placeholder="Ex: Nguyen Van">
+					</div>
+					<div class="form-group mx-sm-2 mb-2">
+					  <label class="form-label mx-sm-3 " for="email">Email</label>
+						<input type="email" id="email" class="form-control" name="email"
+						       placeholder="Ex: abc@xyz.com">
+					</div>
+					<div class="form-group mx-sm-2 mb-2">
+					  <select  class="custom-select" name="departmentId" id="department">
+								<option value="">Choose Department</option>
+								<option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.departmentName}"></option>
+							</select>
+					</div>
+					<button type="submit" class="btn btn-primary mb-2">Search</button>
+					</form>
+			</div>
+			
+		
+			<table class="table table-light table-bordered small shadow">
+					<thead class="thead thead-dark text-center">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">E_Code</th>
+							<th scope="col">
+								<a href=""><i class='bx bxs-up-arrow'></i></a>
+								Name
+								<a href=""><i class='bx bxs-down-arrow'></i></a></th>
+							<th scope="col">DOB</th>
+							<!--							<th scope="col">National Id</th>-->
+							<!--							<th scope="col">Address</th>-->
+							<!--							<th scope="col">Phone</th>-->
+							<th scope="col">Email</th>
+							<th scope="col">Position</th>
+							<th scope="col">Education</th>
+							<th scope="col">Department</th>
+							<th scope="col">Salary</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="employee, loop : ${employees}">
+							<td th:text="${(employees.number * 5) + loop.count}"></td>
+							<td th:text="${employee.id}">
+							</td>
+							<td th:text="${employee.name}"></td>
+							<td th:text="${employee.dayOfBirth}"></td>
+							<!--							<td th:text="${employee.nationalId}"></td>-->
+							<!--							<td th:text="${employee.address}"></td>-->
+							<!--							<td th:text="${employee.phoneNumber}"></td>-->
+							<td th:text="${employee.email}"></td>
+							<td th:text="${employee.position.positionName}"></td>
+							<td th:text="${employee.educationDegree.educationDegreeName}"></td>
+							<td th:text="${employee.department.departmentName}"></td>
+							<td th:text="${#numbers.formatDecimal(employee.salary, 0, 'COMMA', 0, 'POINT')}"></td>
+							<td>
+								<span class="viewSpan" th:attr="data-employee-id=${employee.id}"><i
+									class='bx bx-search-alt-2 bx-border bx-sm'></i></span>
+								<span class="editSpan" th:attr="data-employee-id=${employee.id}"><i
+									class='bx bx-wrench bx-border bx-sm'></i></span>
+								<button type="button" class="border-0 bg-transparent deleteSpan"
+								        data-toggle="modal" data-target="#exampleModalCenter"
+								        th:attr="onclick=|deletePrepare('${employee.id}')|">
+                        <i class='bx bx-trash bx-border bx-sm'></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		
+		
+		<!--Phan Trang-->
+		<div class="pagination-control ">
+			<div class="row d-flex justify-content-center">
+			<nav th:fragment="pagination" aria-label="Page navigation example"
+			     style="width: initial">
+			  <ul class="pagination shadow">
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!employees.hasPrevious() ? ' disabled' : ''}"
+				       th:href="@{/employee(page=${employees.number - 1}, name=${name}, email=${email}, departmentId=${departmentId})}"
+				    >
+					        Previous
+				    </a>
+			    </li>
+				  <li class="page-item btn btn-light" th:text="${employees.number + 1}"></li>
+				  <li class="page-item btn btn-light disabled">/</li>
+				  <li class="page-item btn btn-light disabled"
+				      th:text="${employees.totalPages}"></li>
+				  <span>&nbsp;</span>
+			    <li class="page-item">
+				    <a class="btn btn-light"
+				       th:attrappend="class=${!employees.hasNext() ? ' disabled' : ''}"
+				       th:href="@{/employee(page=${employees.number + 1}, name=${name}, email=${email}, departmentId=${departmentId})}"
+				    >
+					        Next
+				    </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		</div>
+		<!--Edit/ View-->
+		<div class="row d-flex justify-content-center">
+				<div class="card h-auto" style="width: 72rem; display: none" id="ajaxEmployee">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<h5 id="dName"></h5>
+						<span id="messageResponse" class="text-success"></span>
+						<span id="closeSpan"><i class='bx bxs-x-circle bx-sm'></i></span>
+					</div>
+					<div class="card-body">
+							<div class="row d-flex justify-content-center">
+								<div class="col-sm-6">
+									<div class="d-none">
+										<p>Code</p>
+										<input id="dCode" type="hidden" name="id"/>
+									</div>
+									<div class="d-flex justify-content-between align-items-center">
+										<p>DOB</p>
+										<input id="dDOB" name="dayOfBirth"/>
+									</div>
+									<div class="d-flex justify-content-between align-items-center">
+										<p>National ID</p>
+										<input id="dNationalId" name="nationalId"/>
+									</div>
+									<div class="d-flex justify-content-between align-items-center">
+										<p>Address</p>
+										<input id="dAddress" name="address"/>
+									</div>
+									<div class="d-flex justify-content-between align-items-center">
+										<p>Phone</p>
+										<input id="dPhone" name="phoneNumber"/>
+									</div>
+								</div>
+								<div class="col-sm-6">
+										<div class="d-flex justify-content-between align-items-center">
+											<p>Mail</p>
+											<input id="dMail" name="email"/>
+										</div>
+										<div class="d-flex justify-content-between align-items-center">
+												<p>Position</p>
+												<select id="dPosition" name="positionId"></select>
+										</div>
+										<div class="d-flex justify-content-between align-items-center">
+												<p>Education</p>
+												<select id="dEducation" name="educationId"></select>
+										</div>
+										<div class="d-flex justify-content-between align-items-center">
+												<p>Department</p>
+												<select id="dDepartment" name="departmentId"></select>
+										</div>
+										<div class="d-flex justify-content-between align-items-center">
+												<p>Salary</p>
+												<input id="dSalary" name="salary"/>
+										</div>
+								</div>
+						</div>
+					</div>
+					<div class="card-footer">
+				    <a href="#" class="btn btn-warning" id="enableEditBtn">Enable Edit</a>
+				    <a href="#" class="btn btn-info" id="editAjaxBtn" style="display: none">Confirm Edit</a>
+				  </div>
+			</div>
+		</div>
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+			     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered" role="document" >
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete?</h5>
+	                <button type="button" class="close text-light" data-dismiss="modal"
+	                        aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <form th:action="@{/employee/delete}" method="post">
+	                <div class="modal-body">
+	                    <input type="hidden" id="id_delete" name="id">
+	                    <div id="name_delete"></div>
+	                    <div class="text-danger">WARNING: YOU CAN NOT ROLLBACK AFTER DELETE!!!</div>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+	                    <button type="submit" class="btn btn-danger">YES</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+		</div>
+
+	</div>
+	<th:block th:replace="~{layout :: l_js}">
+	</th:block>
+	<script defer src="/ajax/employee/view.js"></script>
+	<script>
+		function deletePrepare(id) {
+      $('#id_delete').val(id)
+      $('#name_delete').text(id)
+    }
+	</script>
+</body>
+</html>
+<!--<div class="row d-flex justify-content-center">-->
+<!--			<div class="col-md-5" th:each="employee, loop : ${employees}">-->
+<!--				 <div class="card"-->
+<!--				      th:attrappend="class=${employee.position.id == 1} ? ' green' : ''">-->
+<!--                    <div class="additional">-->
+<!--				        <div class="user-card">-->
+<!--					        <div class="level center">-->
+<!--					          <span th:text="${employee.position.positionName}"></span>-->
+<!--					        </div>-->
+<!--					        <div class="points center">-->
+<!--					          <span th:text="${employee.department.departmentName}"></span>-->
+<!--					        </div>-->
+<!--					        <svg width="110" height="110" viewBox="0 0 250 250"-->
+<!--					             xmlns="http://www.w3.org/2000/svg" role="img"-->
+<!--					             aria-labelledby="title desc" class="center">-->
+<!--				          <title id="title">Teacher</title>-->
+<!--				          <desc id="desc">Cartoon of a Caucasian woman smiling, and wearing black glasses and a purple shirt with white collar drawn by Alvaro Montoro.</desc>-->
+<!--				          <style>-->
+<!--				            .skin {-->
+<!--                      fill: #eab38f;-->
+<!--                    }-->
+
+<!--                    .eyes {-->
+<!--                      fill: #1f1f1f;-->
+<!--                    }-->
+
+<!--                    .hair {-->
+<!--                      fill: #2f1b0d;-->
+<!--                    }-->
+
+<!--                    .line {-->
+<!--                      fill: none;-->
+<!--                      stroke: #2f1b0d;-->
+<!--                      stroke-width: 2px;-->
+<!--                    }-->
+<!--				          </style>-->
+<!--				          <defs>-->
+<!--				            <clipPath id="scene">-->
+<!--				              <circle cx="125" cy="125" r="115"/>-->
+<!--				            </clipPath>-->
+<!--				            <clipPath id="lips">-->
+<!--				              <path-->
+<!--					              d="M 106,132 C 113,127 125,128 125,132 125,128 137,127 144,132 141,142  134,146  125,146  116,146 109,142 106,132 Z"/>-->
+<!--				            </clipPath>-->
+<!--				          </defs>-->
+<!--				          <circle cx="125" cy="125" r="120" fill="rgba(0,0,0,0.15)"/>-->
+<!--				          <g stroke="none" stroke-width="0" clip-path="url(#scene)">-->
+<!--				            <rect x="0" y="0" width="250" height="250" fill="#b0d2e5"/>-->
+<!--				            <g id="head">-->
+<!--				              <path fill="none" stroke="#111111" stroke-width="2"-->
+<!--				                    d="M 68,103 83,103.5"/>-->
+<!--				              <path class="hair"-->
+<!--				                    d="M 67,90 67,169 78,164 89,169 100,164 112,169 125,164 138,169 150,164 161,169 172,164 183,169 183,90 Z"/>-->
+<!--				              <circle cx="125" cy="100" r="55" class="skin"/>-->
+<!--				              <ellipse cx="102" cy="107" rx="5" ry="5" class="eyes" id="eye-left"/>-->
+<!--				              <ellipse cx="148" cy="107" rx="5" ry="5" class="eyes" id="eye-right"/>-->
+<!--				              <rect x="119" y="140" width="12" height="40" class="skin"/>-->
+<!--				              <path class="line eyebrow" d="M 90,98 C 93,90 103,89 110,94"-->
+<!--				                    id="eyebrow-left"/>-->
+<!--				              <path class="line eyebrow" d="M 160,98 C 157,90 147,89 140,94"-->
+<!--				                    id="eyebrow-right"/>-->
+<!--				              <path stroke="#111111" stroke-width="4" d="M 68,103 83,102.5"/>-->
+<!--				              <path stroke="#111111" stroke-width="4" d="M 182,103 167,102.5"/>-->
+<!--				              <path stroke="#050505" stroke-width="3" fill="none"-->
+<!--				                    d="M 119,102 C 123,99 127,99 131,102"/>-->
+<!--				              <path fill="#050505"-->
+<!--				                    d="M 92,97 C 85,97 79,98 80,101 81,104 84,104 85,102"/>-->
+<!--				              <path fill="#050505"-->
+<!--				                    d="M 158,97 C 165,97 171,98 170,101 169,104 166,104 165,102"/>-->
+<!--				              <path stroke="#050505" stroke-width="3" fill="rgba(240,240,255,0.4)"-->
+<!--				                    d="M 119,102 C 118,111 115,119 98,117 85,115 84,108 84,104 84,97 94,96 105,97 112,98 117,98 119,102 Z"/>-->
+<!--				              <path stroke="#050505" stroke-width="3" fill="rgba(240,240,255,0.4)"-->
+<!--				                    d="M 131,102 C 132,111 135,119 152,117 165,115 166,108 166,104 166,97 156,96 145,97 138,98 133,98 131,102 Z"/>-->
+<!--				              <path class="hair"-->
+<!--				                    d="M 60,109 C 59,39 118,40 129,40 139,40 187,43 189,99 135,98 115,67 115,67 115,67 108,90 80,109 86,101 91,92 92,87 85,99 65,108 60,109"/>-->
+<!--				              <path id="mouth" fill="#d73e3e"-->
+<!--				                    d="M 106,132 C 113,127 125,128 125,132 125,128 137,127 144,132 141,142  134,146  125,146  116,146 109,142 106,132 Z"/>-->
+<!--				              <path id="smile" fill="white"-->
+<!--				                    d="M125,141 C 140,141 143,132 143,132 143,132 125,133 125,133 125,133 106.5,132 106.5,132 106.5,132 110,141 125,141 Z"-->
+<!--				                    clip-path="url(#lips)"/>-->
+<!--				            </g>-->
+<!--				            <g id="shirt">-->
+<!--				              <path fill="#8665c2"-->
+<!--				                    d="M 132,170 C 146,170 154,200 154,200 154,200 158,250 158,250 158,250 92,250 92,250 92,250 96,200 96,200 96,200 104,170 118,170 118,170 125,172 125,172 125,172 132,170 132,170 Z"/>-->
+<!--				              <path id="arm-left" class="arm" stroke="#8665c2" fill="none"-->
+<!--				                    stroke-width="14" d="M 118,178 C 94,179 66,220 65,254"/>-->
+<!--				              <path id="arm-right" class="arm" stroke="#8665c2" fill="none"-->
+<!--				                    stroke-width="14" d="M 132,178 C 156,179 184,220 185,254"/>-->
+<!--				              <path fill="white"-->
+<!--				                    d="M 117,166 C 117,166 125,172 125,172 125,182 115,182 109,170 Z"/>-->
+<!--				              <path fill="white"-->
+<!--				                    d="M 133,166 C 133,166 125,172 125,172 125,182 135,182 141,170 Z"/>-->
+<!--				              <circle cx="125" cy="188" r="4" fill="#5a487b"/>-->
+<!--				              <circle cx="125" cy="202" r="4" fill="#5a487b"/>-->
+<!--				              <circle cx="125" cy="216" r="4" fill="#5a487b"/>-->
+<!--				              <circle cx="125" cy="230" r="4" fill="#5a487b"/>-->
+<!--				              <circle cx="125" cy="244" r="4" fill="#5a487b"/>-->
+<!--				              <path stroke="#daa37f" stroke-width="1" class="skin hand"-->
+<!--				                    id="hand-left"-->
+<!--				                    d="M 51,270 C 46,263 60,243 63,246 65,247 66,248 61,255 72,243 76,238 79,240 82,243 72,254 69,257 72,254 82,241 86,244 89,247 75,261 73,263 77,258 84,251 86,253 89,256 70,287 59,278"/>-->
+<!--				              <path stroke="#daa37f" stroke-width="1" class="skin hand"-->
+<!--				                    id="hand-right"-->
+<!--				                    d="M 199,270 C 204,263 190,243 187,246 185,247 184,248 189,255 178,243 174,238 171,240 168,243 178,254 181,257 178,254 168,241 164,244 161,247 175,261 177,263 173,258 166,251 164,253 161,256 180,287 191,278"/>-->
+<!--				            </g>-->
+<!--				          </g>-->
+<!--				        </svg>-->
+<!--				        </div>-->
+<!--				        <div class="more-info">-->
+<!--					        <h3 th:text="${employee.name}"></h3>-->
+<!--					        <div class="coords">-->
+<!--					          <span>ID</span>-->
+<!--					          <span th:text="${employee.nationalId}"></span>-->
+<!--					        </div>-->
+<!--					        <div class="coords">-->
+<!--					          <span>DOB</span>-->
+<!--					          <span th:text="${employee.dayOfBirth}"></span>-->
+<!--					        </div>-->
+<!--					        <div class="coords">-->
+<!--					            <span>Address</span>-->
+<!--						        <span th:text="${employee.address}"></span>-->
+<!--					        </div>-->
+<!--					        <div class="coords">-->
+<!--						        <span>Phone</span>-->
+<!--					            <span th:text="${employee.phoneNumber}"></span>-->
+<!--					        </div>-->
+<!--					        <div class="coords">-->
+<!--						        <span>Email</span>-->
+<!--						        <span th:text="${employee.email}"></span>-->
+<!--					        </div>-->
+<!--					        <div class="stats">-->
+<!--						          <div>-->
+<!--							            <i class='bx bxs-trophy'></i>-->
+<!--							            <div class="value" th:text="${employee.educationDegree.educationDegreeName}"></div>-->
+<!--						          </div>-->
+<!--						          <div>-->
+<!--							            <i class='bx bxs-dollar-circle' ></i>-->
+<!--							            <div class="value" th:text="${#numbers.formatDecimal(employee.salary, 0, 'COMMA', 0, 'POINT')}"></div>-->
+<!--						          </div>-->
+<!--				            </div>-->
+<!--			      </div>-->
+<!--			    </div>-->
+<!--				    <div class="general">-->
+<!--				      	<h3 th:text="${employee.name}"></h3>-->
+<!--				      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a volutpat mauris, at molestie lacus. Nam vestibulum sodales odio ut pulvinar.</p>-->
+<!--				      <span class="more">Mouse over the card for more info</span>-->
+<!--				    </div>-->
+<!--			  </div>-->
+<!--			</div>-->
+<!--		</div>-->

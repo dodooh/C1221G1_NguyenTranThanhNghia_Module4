@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+	<th:block th:replace="~{layout :: css}"></th:block>
+</head>
+<body>
+<div class="container">
+	<div class="display-2">Shop</div>
+	<div class="container row my-2">
+		<a class="btn btn-warning col-3" href="/create">Create New Product</a>
+		<div class="col-6"></div>
+		<a class="btn btn-info col-3" href="/cart">Go To Cart</a>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-3" th:each="product : ${products}">
+				<div class="card">
+				  <a th:href="@{/view/{id}(id=${product.code})}"><img th:src="@{${product.image}}" class="card-img-top" alt="Fissure in Sandstone"/></a>
+					  <div class="card-body">
+					    <h5 th:text="${product.name}" class="card-title"></h5>
+					    <h6 th:text="${product.price} + ${' VND'}" class="card-text text-danger"></h6>
+					    <p th:text="${'No #'} + ${product.code}" class="card-text small"></p>
+					    <a th:href="@{/add/__${product.code}__(action='list')}" class="btn btn-primary">Add To Card</a>
+			        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<th:block th:replace="~{layout :: js}"></th:block>
+</body>
+</html>

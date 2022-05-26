@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+			 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Edit Product</title>
+	<th:block th:replace="~{layout :: link_css}">
+	</th:block>
+</head>
+<body>
+<div class="highlight-bg has-margin-bottom">
+  <div class="container">
+    <h3>Edit Products</h3>
+    <a th:href="@{/product}" class="btn btn-secondary">Back to List</a>
+  </div>
+</div>
+
+<div class="container theme-showcase min-vh-100" role="main">
+    <form action="" method="post" th:object="${product}">
+		  <div class="form-group">
+			<label for="name">Product Name</label>
+			<input type="text" class="form-control" th:field="*{name}"
+                   placeholder="Enter Name of Product">
+		  </div>
+		  <div class="form-group">
+			<label for="price">Price</label>
+			<input type="text" class="form-control" th:field="*{price}"
+                   placeholder="Enter Price of Product">
+		  </div>
+		  <div class="form-group">
+			<label for="description">Description</label>
+			<input type="text" class="form-control" th:field="*{description}"
+                   placeholder="Enter Description of Product">
+		  </div>
+		<div class="form-group">
+			<label for="manufactor">Manufacture</label>
+			<input type="text" class="form-control" th:field="*{manufacture}"
+                   placeholder="Enter Manufacture of Product">
+		  </div>
+		  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: bottom_script}">
+</th:block>
+</body>
+</html>

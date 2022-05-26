@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../:\CodeGym\Học liệu Java\Demo Code\Module-4\15. Phân quyền ứng dụng\spring-role-based-authorization\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
