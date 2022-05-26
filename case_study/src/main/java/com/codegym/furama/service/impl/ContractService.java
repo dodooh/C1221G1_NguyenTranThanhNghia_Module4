@@ -3,6 +3,7 @@ package com.codegym.furama.service.impl;
 import com.codegym.furama.model.contract.Contract;
 import com.codegym.furama.repository.IContractRepository;
 import com.codegym.furama.service.IContractService;
+import com.codegym.furama.service.IPaidCustomer;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,5 +32,10 @@ public class ContractService implements IContractService {
     @Override
     public Optional<Contract> findById(String id) {
         return contractRepository.findById(id);
+    }
+
+    @Override
+    public Page<IPaidCustomer> getPaidCustomerPage(Pageable pageable) {
+        return contractRepository.getPaidCustomerPage(pageable);
     }
 }

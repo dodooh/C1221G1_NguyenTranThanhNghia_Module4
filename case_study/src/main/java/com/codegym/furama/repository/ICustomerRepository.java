@@ -17,4 +17,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, String> {
     @Modifying
     @Query(value = "update m4_furama.customer e set e.is_activated = false where e.id = :customer_id", nativeQuery = true)
     Integer deactivate(@Param("customer_id") String id);
+
+
+
 }

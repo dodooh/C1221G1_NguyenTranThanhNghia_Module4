@@ -19,9 +19,8 @@
 		<div class="d-flex justify-content-between mb-2">
 				<div>
 					<a class="btn btn-success"
-					   th:href="@{'/contract/create'}"
+					   th:href="@{'/contract'}"
 					   role="button">
-				    +
 				    <span th:text="${mainObject}"></span>
 			    </a>
 				</div>
@@ -30,27 +29,29 @@
 					<thead class="thead thead-dark text-center">
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">Contract Code</th>
+							<th scope="col">CS#Code</th>
 							<th scope="col">Customer Name</th>
-							<th scope="col">Start Date</th>
-							<th scope="col">End Date</th>
-							<th scope="col">Extra Service</th>
-							<th scope="col">Quantity</th>
-							<th scope="col">Price</th>
+							<th scope="col">Type</th>
+							<th scope="col">Facility</th>
+							<th scope="col">Cost</th>
+							<th scope="col">StartDate</th>
+							<th scope="col">EndDate</th>
+							<th scope="col">AttachService</th>
 							<th scope="col">Total Money</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cd, loop : ${contractDetails}">
-							<td th:text="${(contractDetails.number * 10) + loop.count}"></td>
-							<td th:text="${cd.contract.id}"></td>
-							<td th:text="${cd.contract.customer.name}"></td>
-							<td th:text="${cd.contract.startDate}"></td>
-							<td th:text="${cd.contract.endDate}"></td>
-							<td th:text="${cd.serviceExtra.name}"></td>
-							<td th:text="${cd.quantity}"></td>
-							<td th:text="${cd.serviceExtra.cost}"></td>
-							<td th:text="${#numbers.formatDecimal(cd.quantity * cd.serviceExtra.cost, 0, 'COMMA', 0, 'POINT')}"></td>
+						<tr th:each="cd, loop : ${paidCustomers}">
+							<td th:text="${(paidCustomers.number * 10) + loop.count}"></td>
+							<td th:text="${cd.getCustomerId()}"></td>
+							<td th:text="${cd.getCustomerName()}"></td>
+							<td th:text="${cd.getCustomerTypeName()}"></td>
+							<td th:text="${cd.getFacilityName()}"></td>
+							<td th:text="${#numbers.formatDecimal(cd.getFacilityCost(), 0, 'COMMA', 0, 'POINT')}"></td>
+							<td th:text="${cd.getStartDate()}"></td>
+							<td th:text="${cd.getEndDate()}"></td>
+							<td th:text="${cd.getAttachServiceName()}"></td>
+							<td th:text="${#numbers.formatDecimal(cd.getTotal(), 0, 'COMMA', 0, 'POINT')}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -64,21 +65,21 @@
 			  <ul class="pagination">
 			    <li class="page-item">
 				    <a class="btn btn-light"
-				       th:attrappend="class=${!contractDetails.hasPrevious() ? ' disabled' : ''}"
-				       th:href="@{/detail-contract(page=${contractDetails.number - 1}, q=${q})}"
+				       th:attrappend="class=${!paidCustomers.hasPrevious() ? ' disabled' : ''}"
+				       th:href="@{/contract/paid-customer(page=${paidCustomers.number - 1}, q=${q})}"
 				    >
 					        Previous
 				    </a>
 			    </li>
-				  <li class="page-item btn btn-light" th:text="${contractDetails.number + 1}"></li>
+				  <li class="page-item btn btn-light" th:text="${paidCustomers.number + 1}"></li>
 				  <li class="page-item btn btn-light disabled">/</li>
 				  <li class="page-item btn btn-light disabled"
-				      th:text="${contractDetails.totalPages}"></li>
+				      th:text="${paidCustomers.totalPages}"></li>
 				  <span>&nbsp;</span>
 			    <li class="page-item">
 				    <a class="btn btn-light"
-				       th:attrappend="class=${!contractDetails.hasNext() ? ' disabled' : ''}"
-				       th:href="@{/detail-contract(page=${contractDetails.number + 1}, q=${q})}"
+				       th:attrappend="class=${!paidCustomers.hasNext() ? ' disabled' : ''}"
+				       th:href="@{/contract/paid-customer(page=${paidCustomers.number + 1}, q=${q})}"
 				    >
 					        Next
 				    </a>

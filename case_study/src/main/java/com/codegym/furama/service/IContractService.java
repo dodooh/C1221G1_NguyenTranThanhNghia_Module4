@@ -12,4 +12,6 @@ public interface IContractService {
     void save(Contract contract);
 
     Optional<Contract> findById(String id);
+
+    Page<IPaidCustomer> getPaidCustomerPage(Pageable pageable);
 }

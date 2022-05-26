@@ -7,8 +7,10 @@ import com.codegym.furama.service.IContractService;
 import com.codegym.furama.service.ICustomerService;
 import com.codegym.furama.service.IEmployeeService;
 import com.codegym.furama.service.IFacilityService;
+import com.codegym.furama.service.IPaidCustomer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,14 @@ public class ContractController {
         model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("facilities", facilityService.findAll());
         return "contract/create";
+    }
+
+    @GetMapping("paid-customer")
+    public String getPaidCustomer(@PageableDefault(value = 10) Pageable pageable, Model model) {
+        Page<IPaidCustomer> iPaidCustomerPage= contractService.getPaidCustomerPage(pageable);
+        model.addAttribute("paidCustomers",iPaidCustomerPage);
+        return "contract/paid_list";
+
     }
 
     @PostMapping("create")
