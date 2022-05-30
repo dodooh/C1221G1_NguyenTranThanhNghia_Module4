@@ -1,14 +1,15 @@
-package codegym.danang.demo.service;
+package com.codegym.furama.service.impl;
 
-import codegym.danang.demo.entity.AppUser;
-import codegym.danang.demo.repository.IAppRoleRepository;
-import codegym.danang.demo.repository.IAppUserRepository;
+import com.codegym.furama.model.user.AppUser;
+import com.codegym.furama.repository.IAppRoleRepository;
+import com.codegym.furama.repository.IAppUserRepository;
+import com.codegym.furama.service.IUserService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     @Autowired
     private IAppUserRepository iAppUserRepository;

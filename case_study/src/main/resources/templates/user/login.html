@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Furama | Homepage</title>
+  <th:block th:replace="~{layout :: l_style_css}">
+  </th:block>
+	<link rel="stylesheet" href="/layout/login.css">
+</head>
+<body id="body-pd">
+  <header th:replace="~{layout :: l_header}"></header>
+  <div th:replace="~{layout :: l_navbar}"></div>
+  <div class="height-100 bg-light">
+	      <div th:if="${#request.getParameter('error') == 'true'}"
+	           style="color:red;margin:10px 0px;">
+				    Login Failed!!!<br />
+				    Reason :
+				    <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+				          th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+				                Static summary
+				         </span>
+				
+				</div>
+        <div class="wrapper fadeInDown">
+				  <div id="formContent">
+				    <!-- Tabs Titles -->
+					
+					  <!-- Icon -->
+				    <div class="fadeIn first">
+				      <i class='bx bxl-foursquare nav_logo-icon bx-lg text-dark'></i>
+				    </div>
+					
+					  <!-- Login Form -->
+				    <form name='f' th:action="@{/j_spring_security_check}" method='POST'>
+				      <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+				      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+				      <input type="submit" class="fadeIn fourth" value="Log In">
+				    </form>
+					
+					  <!-- Remind Passowrd -->
+				    <div id="formFooter">
+				      <a class="underlineHover" href="#">Forgot Password?</a>
+					    <label>Remember me
+								<input type="checkbox" name="remember-me">
+							</label>
+				    </div>
+				  </div>
+				</div>
+  </div>
+  <th:block th:replace="~{layout :: l_js}">
+  </th:block>
+</body>
+</html>

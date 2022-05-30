@@ -1,8 +1,10 @@
-package codegym.danang.demo.service;
+package com.codegym.furama.service.impl;
 
-import codegym.danang.demo.entity.AppUser;
-import codegym.danang.demo.repository.IAppRoleRepository;
-import codegym.danang.demo.repository.IAppUserRepository;
+import com.codegym.furama.model.user.AppUser;
+import com.codegym.furama.repository.IAppRoleRepository;
+import com.codegym.furama.repository.IAppUserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,9 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
