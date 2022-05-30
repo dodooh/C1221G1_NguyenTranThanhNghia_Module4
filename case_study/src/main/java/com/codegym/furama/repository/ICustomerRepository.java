@@ -11,13 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface ICustomerRepository extends JpaRepository<Customer, String> {
 
-    Page<Customer> findAllByNameContainingAndIsActivated(String name,Boolean isActivated, Pageable pageable);
+    Page<Customer> findAllByNameContainingAndIsActivated(String name, Boolean isActivated, Pageable pageable);
 
     @Transactional
     @Modifying
     @Query(value = "update m4_furama.customer e set e.is_activated = false where e.id = :customer_id", nativeQuery = true)
     Integer deactivate(@Param("customer_id") String id);
-
 
 
 }

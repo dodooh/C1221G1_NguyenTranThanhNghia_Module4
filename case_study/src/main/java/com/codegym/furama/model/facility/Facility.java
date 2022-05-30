@@ -16,34 +16,31 @@ import org.hibernate.annotations.Parameter;
 @Entity
 public class Facility {
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "facility")
+    List<Contract> contractList;
     @Id
     @GeneratedValue(generator = "prod-generator")
-    @GenericGenerator(name = "prod-generator",
-        parameters = @Parameter(name = "prefix", value = "DV"),
-        strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
+    @GenericGenerator(name = "prod-generator", parameters = @Parameter(name = "prefix", value = "DV"), strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
     private String id;
     private String name;
     private Integer area;
     private Double cost;
     private Integer maxPeople;
-
     @ManyToOne
     @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
     private RentType rentType;
-
     @ManyToOne
     @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
-
     private String standardRoom;
     private String otherConvenience;
     private Double poolArea;
     private Integer numberOfFloors;
     private String freeService;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "facility")
-    List<Contract> contractList;
+    public Facility() {
+    }
 
     public List<Contract> getContractList() {
         return contractList;
@@ -51,9 +48,6 @@ public class Facility {
 
     public void setContractList(List<Contract> contractList) {
         this.contractList = contractList;
-    }
-
-    public Facility() {
     }
 
     public String getId() {

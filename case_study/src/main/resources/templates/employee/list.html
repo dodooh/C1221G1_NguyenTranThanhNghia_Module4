@@ -36,7 +36,7 @@
 					</div>
 					<div class="form-group mx-sm-2 mb-2">
 					  <label class="form-label mx-sm-3 " for="email">Email</label>
-						<input type="email" id="email" class="form-control" name="email"
+						<input type="text" id="email" class="form-control" name="email"
 						       placeholder="Ex: abc@xyz.com">
 					</div>
 					<div class="form-group mx-sm-2 mb-2">
@@ -60,9 +60,6 @@
 								Name
 								<a href=""><i class='bx bxs-down-arrow'></i></a></th>
 							<th scope="col">DOB</th>
-							<!--							<th scope="col">National Id</th>-->
-							<!--							<th scope="col">Address</th>-->
-							<!--							<th scope="col">Phone</th>-->
 							<th scope="col">Email</th>
 							<th scope="col">Position</th>
 							<th scope="col">Education</th>
@@ -78,9 +75,6 @@
 							</td>
 							<td th:text="${employee.name}"></td>
 							<td th:text="${employee.dayOfBirth}"></td>
-							<!--							<td th:text="${employee.nationalId}"></td>-->
-							<!--							<td th:text="${employee.address}"></td>-->
-							<!--							<td th:text="${employee.phoneNumber}"></td>-->
 							<td th:text="${employee.email}"></td>
 							<td th:text="${employee.position.positionName}"></td>
 							<td th:text="${employee.educationDegree.educationDegreeName}"></td>

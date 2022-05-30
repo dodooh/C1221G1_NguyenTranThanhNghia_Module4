@@ -24,11 +24,16 @@ public class Department {
     @JsonBackReference
     @OneToMany(mappedBy = "department")
     private List<Employee> employeeList;
+
+    public Department() {
+    }
+
     public Long getId() {
         return id;
     }
 
-    public Department() {
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDepartmentName() {
@@ -45,9 +50,5 @@ public class Department {
 
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

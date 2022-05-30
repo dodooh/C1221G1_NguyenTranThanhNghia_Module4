@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CustomerService  implements ICustomerService {
+public class CustomerService implements ICustomerService {
+
     @Autowired
     private ICustomerRepository iCustomerRepository;
 
 
     @Override
     public Page<Customer> findAllByName(String keyword, Pageable pageable) {
-        return iCustomerRepository.findAllByNameContainingAndIsActivated(keyword,true, pageable);
+        return iCustomerRepository.findAllByNameContainingAndIsActivated(keyword, true, pageable);
     }
 
     @Override

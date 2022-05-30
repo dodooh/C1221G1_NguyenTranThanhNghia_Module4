@@ -18,7 +18,7 @@
 		
 		<div class="d-flex justify-content-between mb-2">
 				<div>
-					<a class="btn btn-success"
+					<a class="btn btn-success shadow"
 					   th:href="@{'/contract/create'}"
 					   role="button">
 				    +
@@ -26,7 +26,7 @@
 			    </a>
 				</div>
 			</div>
-				<table class="table table-light table-bordered small">
+				<table class="table table-light table-bordered small shadow">
 					<thead class="thead thead-dark text-center">
 						<tr>
 							<th scope="col">#</th>
@@ -57,11 +57,11 @@
 		
 		
 		<!--Phan Trang-->
-		<div class="pagination-control">
-			<div class="row d-flex justify-content-center">
+		<div class="pagination-control ">
+			<div class="row d-flex justify-content-center ">
 			<nav th:fragment="pagination" aria-label="Page navigation example"
 			     style="width: initial">
-			  <ul class="pagination">
+			  <ul class="pagination shadow">
 			    <li class="page-item">
 				    <a class="btn btn-light"
 				       th:attrappend="class=${!contractDetails.hasPrevious() ? ' disabled' : ''}"

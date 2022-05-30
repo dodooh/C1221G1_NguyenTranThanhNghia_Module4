@@ -41,14 +41,14 @@ public class ContractDetailController {
     }
 
     @GetMapping("")
-    public String goList(@PageableDefault(size = 10) Pageable pageable,Model model){
+    public String goList(@PageableDefault(size = 10) Pageable pageable, Model model) {
         ContractDetailDto cdt = new ContractDetailDto();
         model.addAttribute("contractDetails", contractDetailService.findAll(pageable));
         return "contract_detail/list";
     }
 
     @PostMapping("create")
-    public String doCreate(ContractDetailDto contractDetailDto, RedirectAttributes ra){
+    public String doCreate(ContractDetailDto contractDetailDto, RedirectAttributes ra) {
         ContractDetail contractDetail = new ContractDetail();
         BeanUtils.copyProperties(contractDetailDto, contractDetail);
         contractDetailService.save(contractDetail);

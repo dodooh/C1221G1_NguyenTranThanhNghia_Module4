@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmployeeService  implements IEmployeeService {
+public class EmployeeService implements IEmployeeService {
 
 
     @Autowired
@@ -34,7 +34,6 @@ public class EmployeeService  implements IEmployeeService {
     }
 
 
-
     @Override
     public Optional<Employee> findById(String id) {
         return iEmployeeRepository.findById(id);
@@ -46,7 +45,8 @@ public class EmployeeService  implements IEmployeeService {
         if ("".equals(departmentIdSearch)) {
             return iEmployeeRepository.findAllByNameContainingAndEmailContainingAndIsActivated(nameSearch, emailSearch, true, pageable);
         }
-        return iEmployeeRepository.findAllByNameContainingAndEmailContainingAndDepartment_IdAndIsActivated(nameSearch, emailSearch, Long.parseLong(departmentIdSearch),true, pageable);
+        return iEmployeeRepository.findAllByNameContainingAndEmailContainingAndDepartment_IdAndIsActivated(nameSearch, emailSearch,
+            Long.parseLong(departmentIdSearch), true, pageable);
     }
 
     @Override

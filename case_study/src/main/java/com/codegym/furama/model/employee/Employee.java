@@ -21,13 +21,13 @@ import org.hibernate.annotations.Parameter;
 public class Employee {
 
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "employee")
+    List<Contract> contractList;
     @Id
     @GeneratedValue(generator = "prod-generator")
-    @GenericGenerator(name = "prod-generator",
-        parameters = @Parameter(name = "prefix", value = "EM"),
-        strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
+    @GenericGenerator(name = "prod-generator", parameters = @Parameter(name = "prefix", value = "EM"), strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
     private String id;
-
     @JsonIgnore
     private Boolean isActivated;
     private String name;
@@ -37,12 +37,6 @@ public class Employee {
     private String phoneNumber;
     private String address;
     private String email;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "employee")
-    List<Contract> contractList;
-
-
     @ManyToOne
     @JoinColumn(name = "education_degree_id", referencedColumnName = "id")
     private EducationDegree educationDegree;
@@ -54,6 +48,9 @@ public class Employee {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
     private Double salary;
+
+    public Employee() {
+    }
 
     public List<Contract> getContractList() {
         return contractList;
@@ -119,10 +116,6 @@ public class Employee {
         this.email = email;
     }
 
-    public void setEducationDegree(EducationDegree educationDegree) {
-        this.educationDegree = educationDegree;
-    }
-
     public Double getSalary() {
         return salary;
     }
@@ -151,7 +144,8 @@ public class Employee {
         return educationDegree;
     }
 
-    public Employee() {
+    public void setEducationDegree(EducationDegree educationDegree) {
+        this.educationDegree = educationDegree;
     }
 
     public String getName() {

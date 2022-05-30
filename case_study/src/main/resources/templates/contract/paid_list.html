@@ -30,6 +30,7 @@
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">CS#Code</th>
+							<th scope="col">HD#Code</th>
 							<th scope="col">Customer Name</th>
 							<th scope="col">Type</th>
 							<th scope="col">Facility</th>
@@ -44,6 +45,7 @@
 						<tr th:each="cd, loop : ${paidCustomers}">
 							<td th:text="${(paidCustomers.number * 10) + loop.count}"></td>
 							<td th:text="${cd.getCustomerId()}"></td>
+							<td th:text="${cd.getContractId()}"></td>
 							<td th:text="${cd.getCustomerName()}"></td>
 							<td th:text="${cd.getCustomerTypeName()}"></td>
 							<td th:text="${cd.getFacilityName()}"></td>

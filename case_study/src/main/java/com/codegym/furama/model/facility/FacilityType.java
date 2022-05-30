@@ -23,6 +23,9 @@ public class FacilityType {
     @OneToMany(mappedBy = "facilityType")
     private List<Facility> facilityList;
 
+    public FacilityType() {
+    }
+
     public String getFacilityTypeName() {
         return facilityTypeName;
     }
@@ -37,9 +40,6 @@ public class FacilityType {
 
     public void setFacilityList(List<Facility> facilityList) {
         this.facilityList = facilityList;
-    }
-
-    public FacilityType() {
     }
 
     public Long getId() {

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FuramaController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String goHomePage(Model model){
+    public String goHomePage(Model model) {
         return "furama/index";
     }
 
 
-    @ExceptionHandler(value= ObjectNotFoundException.class)
+    @ExceptionHandler(value = ObjectNotFoundException.class)
     public String goError() {
         return "furama/error";
     }

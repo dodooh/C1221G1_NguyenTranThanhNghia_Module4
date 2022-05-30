@@ -38,4 +38,16 @@ public class ContractService implements IContractService {
     public Page<IPaidCustomer> getPaidCustomerPage(Pageable pageable) {
         return contractRepository.getPaidCustomerPage(pageable);
     }
+
+    @Override
+    public Page<Contract> findAllByTime(String startDate, String endDate, Pageable pageable) {
+        if ("".equals(startDate) && "".equals(endDate)) {
+            return this.findAll(pageable);
+        } else if ("".equals(startDate)) {
+            return contractRepository.findAllByEndDateBefore(endDate, pageable);
+        } else if ("".equals(endDate)) {
+            return contractRepository.findAllByStartDateAfter(startDate, pageable);
+        }
+        return contractRepository.findAllByStartDateAfterAndEndDateBefore(startDate, endDate, pageable);
+    }
 }

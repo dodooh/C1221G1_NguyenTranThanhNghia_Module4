@@ -4,6 +4,7 @@ import com.codegym.furama.model.contract.ServiceExtra;
 import com.codegym.furama.model.contract.Contract;
 
 public class ContractDetailDto {
+
     private String id;
     private Contract contract;
     private ServiceExtra serviceExtra;

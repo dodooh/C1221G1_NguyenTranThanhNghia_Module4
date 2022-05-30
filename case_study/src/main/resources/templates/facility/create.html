@@ -23,63 +23,72 @@
 				<div class="row d-flex justify-content-center">
 					<div class="col-8">
 						<div class="row mb-3">
-									<div class="col-7">
-											<input style="width: 100%" type="text" th:field="*{name}" placeholder="Name" autocomplete="off"/>
+									<div class="col-7 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{name}" placeholder="Name" autocomplete="off"/>
+											<span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 									</div>
-									<div class="col-5">
-											<input style="width: 100%" type="text" th:field="*{area}" placeholder="Area" autocomplete="off"/>
+									<div class="col-5 form-group">
+											<input style="width: 100%" class="form-control"  type="text" th:field="*{area}" placeholder="Area" autocomplete="off"/>
+										<span style="color: red" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></span>
 									</div>
 						</div>
 						<div class="row mb-3">
-									<div class="col-4">
-											<input style="width: 100%" type="text" th:field="*{cost}" placeholder="Cost" autocomplete="off"/>
+									<div class="col-4 form-group">
+											<input style="width: 100%" class="form-control" type="text" th:field="*{cost}" placeholder="Cost" autocomplete="off"/>
+									<span style="color: red" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></span>
+
 									</div>
-									<div class="col-4">
-											<input style="width: 100%" type="text" th:field="*{maxPeople}" placeholder="Max People" autocomplete="off"/>
+									<div class="col-4 form-group">
+											<input style="width: 100%" class="form-control" type="text" th:field="*{maxPeople}" placeholder="Max People" autocomplete="off"/>
 									</div>
-									<div class="col-4">
-											<select style="width: 100%; height: 30px" th:field="*{rentType}">
+									<div class="col-4 form-group">
+											<select class="form-control" th:field="*{rentType}">
 												<option value="">--Choose Rent Type--</option>
 												<option th:each="rt : ${rentTypes}" th:value="${rt.id}" th:text="${rt.rentTypeName}"></option>
 											</select>
+											<span style="color: red" th:if="${#fields.hasErrors('rentType')}" th:errors="*{rentType}"></span>
+
 									</div>
 						</div>
 						<div class="row mb-3">
-									<div class="col-12">
-											<select id="facilityTypeSelect" style="width: 100%; height: 30px" th:field="*{facilityType}">
+									<div class="col-12 form-group">
+											<select id="facilityTypeSelect" class="form-control" th:field="*{facilityType}">
 												<option value="">--Choose Rent Type--</option>
 												<option th:each="ft : ${facilityTypes}" th:value="${ft.id}" th:text="${ft.facilityTypeName}"></option>
 											</select>
+											<span style="color: red" th:if="${#fields.hasErrors('facilityType')}" th:errors="*{facilityType}"></span>
+
 									</div>
 						</div>
 						<div class="row mb-3" id="villaInputs">
-									<div class="col-4">
-											<input style="width: 100%" type="text" th:field="*{standardRoom}" placeholder="Standard Room" autocomplete="off"/>
+									<div class="col-4 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{standardRoom}" placeholder="Standard Room" autocomplete="off"/>
+										
 									</div>
-									<div class="col-4">
-											<input style="width: 100%" type="text" th:field="*{otherConvenience}" placeholder="Other Convenient" autocomplete="off"/>
+									<div class="col-4 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{otherConvenience}" placeholder="Other Convenient" autocomplete="off"/>
 									</div>
-									<div class="col-2">
-											<input style="width: 100%" type="text" th:field="*{poolArea}" placeholder="Pool Area" autocomplete="off"/>
+									<div class="col-2 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{poolArea}" placeholder="Pool Area" autocomplete="off"/>
 									</div>
-									<div class="col-2">
-											<input style="width: 100%" type="text" th:field="*{numberOfFloors}" placeholder="Floors" autocomplete="off"/>
+									<div class="col-2 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{numberOfFloors}" placeholder="Floors" autocomplete="off"/>
 									</div>
 						</div>
 						<div class="row mb-3" id="houseInputs">
-									<div class="col-4">
-											<input style="width: 100%" type="text" th:field="*{standardRoom}" placeholder="Standard Room" autocomplete="off"/>
+									<div class="col-4 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{standardRoom}" placeholder="Standard Room" autocomplete="off"/>
 									</div>
-									<div class="col-4">
-											<input style="width: 100%" type="text" th:field="*{otherConvenience}" placeholder="Other Convenient" autocomplete="off"/>
+									<div class="col-4 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{otherConvenience}" placeholder="Other Convenient" autocomplete="off"/>
 									</div>
-									<div class="col-2">
-											<input style="width: 100%" type="text" th:field="*{numberOfFloors}" placeholder="Floors" autocomplete="off"/>
+									<div class="col-2 form-group">
+											<input style="width: 100%" class="form-control"  type="text" th:field="*{numberOfFloors}" placeholder="Floors" autocomplete="off"/>
 									</div>
 						</div>
 						<div class="row mb-3" id="roomInputs">
-									<div class="col-12">
-											<input style="width: 100%" type="text" th:field="*{freeService}" placeholder="Free Service" autocomplete="off"/>
+									<div class="col-12 form-group">
+											<input style="width: 100%" type="text" class="form-control" th:field="*{freeService}" placeholder="Free Service" autocomplete="off"/>
 									</div>
 						</div>
 					</div>

@@ -21,9 +21,7 @@ public class Contract {
 
     @Id
     @GeneratedValue(generator = "prod-generator")
-    @GenericGenerator(name = "prod-generator",
-        parameters = @Parameter(name = "prefix", value = "HD"),
-        strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
+    @GenericGenerator(name = "prod-generator", parameters = @Parameter(name = "prefix", value = "HD"), strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
     private String id;
     @Column(columnDefinition = "DATE")
     private String startDate;

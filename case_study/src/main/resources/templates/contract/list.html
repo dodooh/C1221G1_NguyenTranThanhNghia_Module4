@@ -16,23 +16,37 @@
 		     th:text="${#request.getAttribute('ok_message')}">
 		</div>
 		
-		<div class="d-flex justify-content-between mb-2">
+		<div class="w-100">
+			<div class="d-flex justify-content-between">
 				<div>
-					<a class="btn btn-success"
+					<a class="btn btn-success shadow"
 					   th:href="@{'/contract/create'}"
 					   role="button">
 				    +
 				    <span th:text="${mainObject}"></span>
 			    </a>
-					<a class="btn btn-info"
+					<a class="btn btn-info shadow"
 					   th:href="@{'/contract/paid-customer'}"
 					   role="button">
 				    +
 				    <span th:text="${'Paid Customers'}"></span>
 			    </a>
 				</div>
+				<div>
+					<form action="/contract/search" method="get">
+						<label>Start Date
+							<input style="width: 100%" class="form-control shadow" type="date" name="startDate" autocomplete="off"/>
+						</label>
+						<label>End Date
+							<input style="width: 100%" class="form-control shadow" type="date" name="endDate"  autocomplete="off"/>
+						</label>
+						<input class="btn btn-info shadow" type="submit" value="Search" />
+					</form>
+				</div>
 			</div>
-				<table class="table table-light table-bordered small">
+			
+			</div>
+				<table class="table table-light table-bordered small shadow">
 					<thead class="thead thead-dark text-center">
 						<tr>
 							<th scope="col">#</th>
@@ -88,7 +102,7 @@
 			<div class="row d-flex justify-content-center">
 			<nav th:fragment="pagination" aria-label="Page navigation example"
 			     style="width: initial">
-			  <ul class="pagination">
+			  <ul class="pagination shadow">
 			    <li class="page-item">
 				    <a class="btn btn-light"
 				       th:attrappend="class=${!contracts.hasPrevious() ? ' disabled' : ''}"

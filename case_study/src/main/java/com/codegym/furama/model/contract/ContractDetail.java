@@ -14,9 +14,7 @@ public class ContractDetail {
 
     @Id
     @GeneratedValue(generator = "prod-generator")
-    @GenericGenerator(name = "prod-generator",
-        parameters = @Parameter(name = "prefix", value = "HDCT"),
-        strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
+    @GenericGenerator(name = "prod-generator", parameters = @Parameter(name = "prefix", value = "HDCT"), strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
     private String id;
 
 

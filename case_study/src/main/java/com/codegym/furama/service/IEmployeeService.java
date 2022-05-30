@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface IEmployeeService {
 
     List<Employee> findAll();
+
     Page<Employee> findAll(Pageable pageable);
 
     void save(Employee employee);

@@ -105,7 +105,7 @@ public class CustomerDto implements Validator {
         String COMMON_NAME_REGEX = "^\\p{Lu}\\p{Ll}*( \\p{Lu}\\p{Ll}*)*$";
         String PHONE_REGEX = "^0[1-9]\\d{8}$";
         String NATIONAL_ID_REGEX = "^\\d{9}$";
-        String EMAIL_REGEX  = "^\\w+([\\.-]?\\w+)*@[a-z]+\\.(\\w+)(\\.\\w{2,3})?";
+        String EMAIL_REGEX = "^\\w+([\\.-]?\\w+)*@[a-z]+\\.(\\w+)(\\.\\w{2,3})?";
 
         String customerNameCheck = customerDto.getName();
         if (!customerNameCheck.matches(COMMON_NAME_REGEX)) {

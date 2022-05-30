@@ -49,16 +49,14 @@ public class EmployeeController {
     }
 
     @GetMapping(value = {"", "list"})
-    public String goList(Model model,
-        @RequestParam("name") Optional<String> name,
-        @RequestParam("email") Optional<String> email,
-        @RequestParam("departmentId") Optional<String> departmentId,
-        @PageableDefault(value = 5) Pageable pageable) {
+    public String goList(Model model, @RequestParam("name") Optional<String> name, @RequestParam("email") Optional<String> email,
+        @RequestParam("departmentId") Optional<String> departmentId, @PageableDefault(value = 5) Pageable pageable)
+    {
 
         String nameSearch = name.orElse("");
         String emailSearch = email.orElse("");
         String departmentIdSearch = departmentId.orElse("");
-        Page<Employee> employeePage = iEmployeeService.findAll(nameSearch, emailSearch, departmentIdSearch ,pageable);
+        Page<Employee> employeePage = iEmployeeService.findAll(nameSearch, emailSearch, departmentIdSearch, pageable);
         model.addAttribute("employees", employeePage);
         model.addAttribute("name", nameSearch);
         model.addAttribute("email", emailSearch);
@@ -87,9 +85,9 @@ public class EmployeeController {
 
 
     @PostMapping(value = "create")
-    public String doCreate(@Validated @ModelAttribute("employeeDto") EmployeeDto employeeDto,
-        BindingResult bindingResult,
-        RedirectAttributes redirectAttributes) {
+    public String doCreate(@Validated @ModelAttribute("employeeDto") EmployeeDto employeeDto, BindingResult bindingResult,
+        RedirectAttributes redirectAttributes)
+    {
 
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {

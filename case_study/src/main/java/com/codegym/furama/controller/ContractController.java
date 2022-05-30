@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("contract")
@@ -58,14 +59,22 @@ public class ContractController {
 
     @GetMapping("paid-customer")
     public String getPaidCustomer(@PageableDefault(value = 10) Pageable pageable, Model model) {
-        Page<IPaidCustomer> iPaidCustomerPage= contractService.getPaidCustomerPage(pageable);
-        model.addAttribute("paidCustomers",iPaidCustomerPage);
+        Page<IPaidCustomer> iPaidCustomerPage = contractService.getPaidCustomerPage(pageable);
+        model.addAttribute("paidCustomers", iPaidCustomerPage);
         return "contract/paid_list";
 
     }
 
+    @GetMapping("search")
+    public String goSearch(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
+        @PageableDefault(value = 20) Pageable pageable, Model model)
+    {
+        model.addAttribute("contracts", contractService.findAllByTime(startDate, endDate, pageable));
+        return "contract/list";
+    }
+
     @PostMapping("create")
-    public String doCreate(ContractDto contractDto ,Model model) {
+    public String doCreate(ContractDto contractDto, Model model) {
         Contract contract = new Contract();
         BeanUtils.copyProperties(contractDto, contract);
         contractService.save(contract);

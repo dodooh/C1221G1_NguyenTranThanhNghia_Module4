@@ -2,10 +2,15 @@ package com.codegym.furama.dto;
 
 import com.codegym.furama.model.facility.FacilityType;
 import com.codegym.furama.model.facility.RentType;
+import javax.validation.constraints.Pattern;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-public class FacilityDto {
+public class FacilityDto implements Validator {
+
     private String id;
     private String name;
+    @Pattern(regexp = "[\\d]{6}", message = "This field should contain six digits!")
     private Integer area;
     private Double cost;
     private Integer maxPeople;
@@ -16,6 +21,9 @@ public class FacilityDto {
     private Double poolArea;
     private Integer numberOfFloors;
     private String freeService;
+
+    public FacilityDto() {
+    }
 
     public String getId() {
         return id;
@@ -113,6 +121,18 @@ public class FacilityDto {
         this.freeService = freeService;
     }
 
-    public FacilityDto() {
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        FacilityDto facilityDto = (FacilityDto) target;
+
+        Integer areaCheck = facilityDto.getArea();
+        if (areaCheck == null || areaCheck <= 0) {
+            errors.rejectValue("area", "area.invalid", "Loi khong ton tai");
+        }
     }
 }

@@ -44,18 +44,17 @@ public class CustomerController {
     }
 
     @GetMapping(value = {"", "list"})
-    public String goList(Model model,
-        @RequestParam("sort") Optional<String> sortBy,
-        @RequestParam("dir") Optional<String> direction,
-        @PageableDefault(size = 5) Pageable pageable) {
+    public String goList(Model model, @RequestParam("sort") Optional<String> sortBy, @RequestParam("dir") Optional<String> direction,
+        @PageableDefault(size = 5) Pageable pageable)
+    {
 
         String sort = sortBy.orElse("");
         String dir = direction.orElse("");
         pageable = SortUtils.sortProcess(pageable, sort, dir);
-        Page<Customer> customerPage =  customerService.findAll(pageable);
-        model.addAttribute("customers",customerPage);
-        model.addAttribute("sort",sort);
-        model.addAttribute("dir",dir);
+        Page<Customer> customerPage = customerService.findAll(pageable);
+        model.addAttribute("customers", customerPage);
+        model.addAttribute("sort", sort);
+        model.addAttribute("dir", dir);
 
         return "customer/list";
     }
@@ -82,9 +81,9 @@ public class CustomerController {
     }
 
     @PostMapping(value = "update")
-    public String dpUpdate(@Validated @ModelAttribute("customerDto") CustomerDto customerDto,
-        BindingResult bindingResult,
-        RedirectAttributes redirectAttributes) {
+    public String doUpdate(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult,
+        RedirectAttributes redirectAttributes)
+    {
 
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
@@ -99,13 +98,13 @@ public class CustomerController {
     }
 
     @PostMapping(value = "create")
-    public String doCreate(@Validated @ModelAttribute("customerDto") CustomerDto customerDto,
-        BindingResult bindingResult,
-        RedirectAttributes redirectAttributes) {
+    public String doCreate(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult, Model model,
+        RedirectAttributes redirectAttributes)
+    {
 
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
-            redirectAttributes.addFlashAttribute("error_message", "Error");
+            model.addAttribute("error_message", "Error");
             return "customer/create";
         }
         Customer customer = new Customer();

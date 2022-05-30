@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "education_degree")
 public class EducationDegree {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

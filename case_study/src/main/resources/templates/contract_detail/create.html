@@ -16,7 +16,8 @@
 			</div>
 		</div>
 		<div class="container d-flex flex-column justify-content-center" data-theme="dark">
-			<form method="post" th:object="${contractDetailDto}" th:action="@{/detail-contract}">
+			<form method="post" th:object="${contractDetailDto}" th:action="@{/detail-contract/create}">
+				<input type="hidden" th:field="*{contract}">
 				<div class="text-center mb-3">
 						<h2>Create New <span th:text="${mainObject}"></span></h2>
 		    </div>
@@ -25,42 +26,42 @@
 						<div class="row mb-3">
 									<div class="col-4">
 											<label>ID Contract
-												<input readonly style="width: 100%" type="text" th:value="${contractDetailDto.contract.id}" autocomplete="off"/>
+												<input readonly style="width: 100%"  class="form-control"  type="text" th:value="${contractDetailDto.contract.id}" autocomplete="off"/>
 											</label>
 									</div>
 									
 									<div class="col-4">
 											<label>Customer
-											<input readonly style="width: 100%" type="text" th:value="${contractDetailDto.contract.customer.name}" autocomplete="off"/>
+											<input readonly style="width: 100%" type="text"  class="form-control"  th:value="${contractDetailDto.contract.customer.name}" autocomplete="off"/>
 											</label>
 									</div>
 									<div class="col-4">
 											<label>Employee
-											<input readonly style="width: 100%" type="text" th:value="${contractDetailDto.contract.employee.name}" autocomplete="off"/>
+											<input readonly style="width: 100%" type="text" class="form-control"  th:value="${contractDetailDto.contract.employee.name}" autocomplete="off"/>
 											</label>
 									</div>
 						</div>
 						<div class="row mb-3">
 									<div class="col-4">
 										<label>Start Date
-											<input readonly style="width: 100%" type="date" th:value="${contractDetailDto.contract.startDate}" autocomplete="off"/>
+											<input readonly style="width: 100%" type="date" class="form-control"  th:value="${contractDetailDto.contract.startDate}" autocomplete="off"/>
 											</label>
 									</div>
 									<div class="col-4">
 										<label>End Date
-											<input readonly style="width: 100%" type="date" th:value="${contractDetailDto.contract.endDate}" placeholder="Total Money" autocomplete="off"/>
+											<input readonly style="width: 100%" class="form-control"  type="date" th:value="${contractDetailDto.contract.endDate}" placeholder="Total Money" autocomplete="off"/>
 										</label>
 									</div>
 									<div class="col-4">
 										<label>Deposit
-											<input readonly style="width: 100%" type="text" th:value="${#numbers.formatDecimal(contractDetailDto.contract.deposit, 0, 'COMMA', 0, 'POINT')}" placeholder="Total Money" autocomplete="off"/>
+											<input readonly style="width: 100%" class="form-control"  type="text" th:value="${#numbers.formatDecimal(contractDetailDto.contract.deposit, 0, 'COMMA', 0, 'POINT')}" placeholder="Total Money" autocomplete="off"/>
 										</label>
 									</div>
 						</div>
 						<div class="row mb-3">
 									<div class="col-4">
 												<label>Service
-														<select class="form-select" style="width: 100%; height: 30px" th:field="*{serviceExtra}">
+														<select  class="form-control"  th:field="*{serviceExtra}">
 															<option value="">--Choose Extra Service--</option>
 															<option th:each="se : ${serviceExtras}" th:value="${se.id}" th:text="${se.name + ' - ' + #numbers.formatDecimal(se.cost, 0, 'COMMA', 0, 'POINT') + 'VND - ' + se.unit}"></option>
 														</select>
@@ -68,7 +69,7 @@
 									</div>
 								<div class="col-4">
 												<label>Quantity
-													<input style="width: 100%" type="text" th:field="*{quantity}" placeholder="Quantity" autocomplete="off"/>
+													<input style="width: 100%"  class="form-control"  type="text" th:field="*{quantity}" placeholder="Quantity" autocomplete="off"/>
 												</label>
 									</div>
 						</div>

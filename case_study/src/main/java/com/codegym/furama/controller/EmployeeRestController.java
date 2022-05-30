@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/employee")
 public class EmployeeRestController {
+
     @Autowired
     private IEmployeeService iEmployeeService;
 
@@ -39,8 +40,7 @@ public class EmployeeRestController {
     private IDepartmentService iDepartmentService;
 
     @GetMapping(value = {"/{id}"})
-    public ResponseEntity<?> getEmployee(
-        @PathVariable String id) {
+    public ResponseEntity<?> getEmployee(@PathVariable String id) {
 
         Optional<Employee> employeeOptional = iEmployeeService.findById(id);
         if (!employeeOptional.isPresent()) {
@@ -48,7 +48,7 @@ public class EmployeeRestController {
         }
         Map<String, Object> responseObject = new HashMap<>();
 
-        responseObject.put("employee",employeeOptional.get() );
+        responseObject.put("employee", employeeOptional.get());
         responseObject.put("educationDegrees", iEducationDegreeService.findAll());
         responseObject.put("positions", iPositionService.findAll());
         responseObject.put("departments", iDepartmentService.findAll());
@@ -57,14 +57,13 @@ public class EmployeeRestController {
     }
 
     @PatchMapping(value = "")
-    public ResponseEntity<?> updateEmployee(
-        @Validated @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
+    public ResponseEntity<?> updateEmployee(@Validated @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
 
-        new EmployeeDto().validate(employeeDto,bindingResult);
+        new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             Map<String, Object> responseObject = new HashMap<>();
             responseObject.put("errors", bindingResult.getFieldErrors());
-            return new ResponseEntity<>(responseObject,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(responseObject, HttpStatus.BAD_REQUEST);
         }
         System.out.println(employeeDto);
         Optional<Employee> employeeOptional = iEmployeeService.findById(employeeDto.getId());
@@ -78,7 +77,7 @@ public class EmployeeRestController {
             System.out.println(employee);
             iEmployeeService.save(employee);
             Map<String, Object> responseObject = new HashMap<>();
-            responseObject.put("employee",employee );
+            responseObject.put("employee", employee);
             responseObject.put("educationDegrees", iEducationDegreeService.findAll());
             responseObject.put("positions", iPositionService.findAll());
             responseObject.put("departments", iDepartmentService.findAll());
@@ -88,7 +87,6 @@ public class EmployeeRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 
 
 }

@@ -19,13 +19,13 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @Entity
 public class Customer {
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "customer")
+    List<Contract> contractList;
     @Id
     @GeneratedValue(generator = "prod-generator")
-    @GenericGenerator(name = "prod-generator",
-        parameters = @Parameter(name = "prefix", value = "CS"),
-        strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
+    @GenericGenerator(name = "prod-generator", parameters = @Parameter(name = "prefix", value = "CS"), strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
     private String id;
-
     @JsonIgnore
     @Column(name = "is_activated", columnDefinition = "BIT default true", nullable = false)
     private Boolean isActivated = true;
@@ -39,10 +39,6 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
     private CustomerType customerType;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "customer")
-    List<Contract> contractList;
 
     public Customer() {
     }

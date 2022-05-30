@@ -24,15 +24,15 @@ public class EmployeeDto implements Validator {
     private Department department;
     private Double salary;
 
+    public EmployeeDto() {
+    }
+
     public Department getDepartment() {
         return department;
     }
 
     public void setDepartment(Department department) {
         this.department = department;
-    }
-
-    public EmployeeDto() {
     }
 
     public String getAddress() {
@@ -45,18 +45,9 @@ public class EmployeeDto implements Validator {
 
     @Override
     public String toString() {
-        return "EmployeeDto{" +
-            ", name='" + name + '\'' +
-            ", dayOfBirth='" + dayOfBirth + '\'' +
-            ", nationalId='" + nationalId + '\'' +
-            ", phoneNumber='" + phoneNumber + '\'' +
-            ", email='" + email + '\'' +
-            ", address='" + address + '\'' +
-            ", educationDegree=" + educationDegree +
-            ", position=" + position +
-            ", department=" + department +
-            ", salary=" + salary +
-            '}';
+        return "EmployeeDto{" + ", name='" + name + '\'' + ", dayOfBirth='" + dayOfBirth + '\'' + ", nationalId='" + nationalId + '\''
+            + ", phoneNumber='" + phoneNumber + '\'' + ", email='" + email + '\'' + ", address='" + address + '\'' + ", educationDegree="
+            + educationDegree + ", position=" + position + ", department=" + department + ", salary=" + salary + '}';
     }
 
 
@@ -135,7 +126,7 @@ public class EmployeeDto implements Validator {
         String COMMON_NAME_REGEX = "^\\p{Lu}\\p{Ll}*( \\p{Lu}\\p{Ll}*)*$";
         String PHONE_REGEX = "^0[1-9]\\d{8}$";
         String NATIONAL_ID_REGEX = "^\\d{9}$";
-        String EMAIL_REGEX  = "^\\w+([\\.-]?\\w+)*@[a-z]+\\.(\\w+)(\\.\\w{2,3})?";
+        String EMAIL_REGEX = "^\\w+([\\.-]?\\w+)*@[a-z]+\\.(\\w+)(\\.\\w{2,3})?";
         /*VALIDATE Ten*/
         String employeeNameCheck = employeeDto.getName();
         if (!employeeNameCheck.matches(COMMON_NAME_REGEX)) {

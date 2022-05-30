@@ -24,6 +24,9 @@ public class RentType {
     @OneToMany(mappedBy = "rentType")
     private List<Facility> facilityList;
 
+    public RentType() {
+    }
+
     public String getRentTypeName() {
         return rentTypeName;
     }
@@ -38,9 +41,6 @@ public class RentType {
 
     public void setFacilityList(List<Facility> facilityList) {
         this.facilityList = facilityList;
-    }
-
-    public RentType() {
     }
 
     public Long getId() {

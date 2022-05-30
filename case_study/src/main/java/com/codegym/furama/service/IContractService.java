@@ -14,4 +14,6 @@ public interface IContractService {
     Optional<Contract> findById(String id);
 
     Page<IPaidCustomer> getPaidCustomerPage(Pageable pageable);
+
+    Page<Contract> findAllByTime(String startDate, String endDate, Pageable pageable);
 }
