@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+	<th:block th:replace="~{_layout :: _css}"></th:block>
+</head>
+<body>
+	<div class="container-lg">
+	    <div class="height-100 pt-2 my-3">
+		<div class="row">
+			<div class="col-sm-3">
+				<a class="btn btn-secondary" th:href="@{/}">Back to List</a>
+			</div>
+		</div>
+		<div class="container d-flex flex-column justify-content-center" data-theme="dark">
+				
+				<div class="form-group row">
+					<label class="col-sm-3  text-right">Trade ID</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.id}"></p>
+					</div>
+		    </div>
+				
+				<div class="form-group row">
+					<label class="col-sm-3  text-right">Service Type</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.serviceType == 1 ? 'Land' : 'House & Land'}"></p>
+					</div>
+		    </div>
+				
+				<div class="form-group row">
+					<label class="col-sm-3  text-right">Date Trade</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.date}"></p>
+					</div>
+		    </div>
+			
+			<div class="form-group row">
+					<label class="col-sm-3  text-right">Unit</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.unit}"></p>
+					</div>
+		    </div>
+			
+			<div class="form-group row">
+					<label class="col-sm-3  text-right">Area</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.area}"></p>
+					</div>
+		    </div>
+			
+			<div class="form-group row">
+					<label class="col-sm-3  text-right">Customer Name</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.customer.name}"></p>
+					</div>
+		    </div>
+			<div class="form-group row">
+					<label class="col-sm-3  text-right">Phone</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.customer.phone}"></p>
+					</div>
+		    </div>
+			
+			<div class="form-group row">
+					<label class="col-sm-3  text-right">Email</label>
+					<div class="col-sm-6">
+						<p th:text="${trade.customer.mail}"></p>
+					</div>
+		    </div>
+			
+			
+			
+				<div class="form-group row">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-danger" data-toggle="modal"
+						        th:attr="onclick=|viewPrepare('${trade.id}')|"
+						        data-target="#deleteModal">
+									Delete
+						</button>
+					</div>
+					<div class="col-sm-3">
+						<a type="button" href="/" class="btn btn-success">Back</a>
+					</div>
+		    </div>
+		</div>
+	</div>
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+	     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete?</h5>
+	                <button type="button" class="close text-light" data-dismiss="modal"
+	                        aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <form th:action="@{/delete}" method="post">
+	                <div class="modal-body">
+	                    <input type="hidden" id="id_delete" name="id">
+	                    <div id="name_delete"></div>
+	                    <div class="text-danger">WARNING: YOU CAN NOT ROLLBACK AFTER DELETE!!!</div>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary"
+	                            data-dismiss="modal">NO</button>
+	                    <button type="submit" class="btn btn-danger">YES</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+		</div>
+	</div>
+	<script>
+		function viewPrepare(id) {
+      $('#id_delete').val(id);
+    }
+	</script>
+		<th:block th:replace="~{_layout :: _js}"></th:block>
+
+</body>
+</html>

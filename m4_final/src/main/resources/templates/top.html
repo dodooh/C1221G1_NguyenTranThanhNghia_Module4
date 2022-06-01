@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+	<th:block th:replace="~{_layout :: _css}"></th:block>
+</head>
+<body>
+	<div class="container-lg">
+	    <div class="height-100 pt-2 my-3">
+	            <div class="table-title">
+                <div class="row my-3">
+                    <a class="col-sm-4 " href="/"><h2>Order <b>Details</b></h2></a>
+                </div>
+		            <div th:if="${error_message != null}" th:text="${error_message}" class="alert alert-danger" ></div>
+		            <div class="row my-3">
+                      <div class="col-6">
+		                      <form th:action="@{/}" class="form-inline">
+			                      <div class="form-group mb-2">
+			                        <label class="form-label mx-sm-3 " for="from">From</label>
+			                        <input type="date" id="from" class="form-control" name="from">
+			                      </div>
+			                      <div class="form-group mx-sm-2 mb-2">
+			                        <label class="form-label mx-sm-3 " for="to">To</label>
+			                        <input type="date" id="to" class="form-control" name="to">
+			                      </div>
+			                      <button type="submit" class="btn btn-info mb-2">Search</button>
+			                    </form>
+                      </div>
+					            <div class="col-6 d-flex justify-content-end">
+												<form th:action="@{/top}" class="form-inline">
+													<span>Top&nbsp;</span>
+													<select name="limit" class="form-control">
+														<option value="1">1</option>
+														<option value="5">5</option>
+														<option value="10">10</option>
+													</select>
+													<span>&nbsp;Order that have highest total&nbsp;</span>
+													<input type="submit" class="btn btn-info mb-2" th:value="Find">
+												</form>
+					            </div>
+		            </div>
+		            
+	            </div>
+	            <table class="table table-bordered">
+	                <thead>
+	                    <tr>
+	                        <th>STT</th>
+	                        <th>ID</th>
+	                        <th>Product Name</th>
+	                        <th>Price(USD)</th>
+	                        <th>Type</th>
+	                        <th>Date</th>
+	                        <th>Quantity</th>
+	                        <th>Total(USD)</th>
+	                        <th>action</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr th:each="order, loop : ${orders}"> <!-- th:each="obj, loop : ${objs}"-->
+	                        <td th:text="${loop.count}"></td>
+	                        <td th:text="${order.id}"></td>
+	                        <td th:text="${order.product.name}"></td>
+	                        <td th:text="${#numbers.formatDecimal(order.product.price, 0, 'COMMA', 0, 'POINT')}"></td>
+	                        <td th:text="${order.product.productType.name}"></td>
+	                        <td th:text="${order.purchaseDate}"></td>
+	                        <td th:text="${order.quantity}"></td>
+	                        <td th:text="${#numbers.formatDecimal((order.product.price * order.quantity), 0, 'COMMA', 0, 'POINT')}"></td>
+	                        <td>
+<!--	                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE145;</i></a>-->
+	                            <a th:href="@{/edit/{id}(id=${order.id})}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+<!--	                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
+	                        </td>
+	                    </tr>
+	                    
+	                </tbody>
+	            </table>
+	    </div>
+	</div>
+	
+	<th:block th:replace="~{_layout :: _js}"></th:block>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+	<th:block th:replace="~{_layout :: _css}"></th:block>
+</head>
+<body>
+<div class="height-100 bg-light">
+		<div class="row">
+			<div class="col-sm-3">
+				<a class="btn btn-secondary" th:href="@{/}">Back to List</a>
+			</div>
+		</div>
+		<div class="container d-flex flex-column justify-content-center" data-theme="dark">
+			<form method="post" th:object="${tradeDto}" ><!--th:object="${customerDto}"-->
+				<div class="form-group row">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-9">
+						<h2>Create New Trade</h2>
+					</div>
+		    </div>
+				
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="id">Trade ID</label>
+					<div class="col-sm-6">
+						<input type="text" id="id" class="form-control" th:field="*{id}"
+						       placeholder="Ex: MGD-0001">
+						<span style="color: red" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+					</div>
+		    </div>
+				
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="customer">Customer</label>
+					<div class="col-sm-3">
+						<select class="custom-select" th:field="*{customer}" id="customer">
+							<option value="">Choose Customer</option>
+							<option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.name}"></option>
+						</select>
+						<span style="color: red" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}"></span>
+					</div>
+		    </div>
+				
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right">Service Type</label>
+					<div class="col-sm-6">
+						<label class="col-form-label" for="MaleRadio">Land</label>
+						<input type="radio" th:field="*{serviceType}" id="MaleRadio" value="1">
+						<label class="col-form-label" for="MaleRadio">House & Land</label>
+						<input type="radio" th:field="*{serviceType}" id="FemaleRadio" value="0">
+						<span style="color: red" th:if="${#fields.hasErrors('serviceType')}" th:errors="*{serviceType}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="date">Date Trade</label>
+					<div class="col-sm-3">
+						<input type="date" id="date" class="form-control" th:field="*{date}"
+						       placeholder="Format: 01/06/2022">
+						<span style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="unit">Unit</label>
+					<div class="col-sm-3">
+						<input type="text" id="unit" class="form-control" th:field="*{unit}"
+						       placeholder="Ex: 20000000">
+						<span style="color: red" th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right" for="area">Area</label>
+					<div class="col-sm-6">
+						<input type="text" id="area" class="form-control" th:field="*{area}"
+						       placeholder="Ex: 3000">
+						<span style="color: red" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></span>
+					</div>
+		    </div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label text-right"></label>
+					<div class="col-sm-3">
+						<button type="submit" class="btn btn-success">Submit</button>
+					</div>
+			    </div>
+			</form>
+		</div>
+	</div>
+		<th:block th:replace="~{_layout :: _js}"></th:block>
+
+</body>
+</html>

@@ -9,7 +9,7 @@
 <body id="body-pd">
 	<header th:replace="~{layout :: l_header}"></header>
 	<div th:replace="~{layout :: l_navbar}"></div>
-	<div class="height-100 pt-2">
+	<div class="height-100 pt-2 shadow">
 			<div class="alert alert-success"
 			     th:if="${#request.getAttribute('success_message') != null}"
 			     th:text="${#request.getAttribute('success_message')}">
@@ -50,7 +50,7 @@
 			</div>
 			
 		
-			<table class="table table-light table-bordered small shadow">
+			<table class="table table-light table-bordered small ">
 					<thead class="thead thead-dark text-center">
 						<tr>
 							<th scope="col">#</th>

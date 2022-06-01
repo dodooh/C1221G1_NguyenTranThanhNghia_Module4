@@ -22,10 +22,12 @@ public class Customer {
     @JsonBackReference
     @OneToMany(mappedBy = "customer")
     List<Contract> contractList;
+
     @Id
     @GeneratedValue(generator = "prod-generator")
     @GenericGenerator(name = "prod-generator", parameters = @Parameter(name = "prefix", value = "CS"), strategy = "com.codegym.furama.utils.IdentityCodeGenerator")
     private String id;
+
     @JsonIgnore
     @Column(name = "is_activated", columnDefinition = "BIT default true", nullable = false)
     private Boolean isActivated = true;

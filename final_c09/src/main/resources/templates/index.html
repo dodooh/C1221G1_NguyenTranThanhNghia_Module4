@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+	<th:block th:replace="~{_layout :: _css}"></th:block>
+</head>
+<body>
+	<div class="container-lg">
+	    <div class="height-100 pt-2 my-3">
+	            <div class="table-title">
+                <div class="row my-3">
+                    <div class="col-sm-4"><h2>Trade <b>Details</b></h2></div>
+                </div>
+		            <div class="row my-3">
+			            <div class="col-2">
+				            <a href="/create" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+			            </div>
+			            <div class="col-10 d-flex justify-content-end">
+				            	<form th:action="@{/search}" class="form-inline">
+											<div class="form-group mb-2">
+											  <label class="form-label mx-sm-3 " for="name">Name</label>
+												<input type="text" id="name" class="form-control" name="name"
+												       placeholder="Ex: Nguyen Van">
+											</div>
+											<div class="form-group mx-sm-2 mb-2">
+											  <label class="col-form-label" for="MaleRadio">Land</label>
+												<input type="radio" name="serviceType" id="MaleRadio" value="1">
+												<label class="col-form-label" for="MaleRadio">House & Land</label>
+												<input type="radio" name="serviceType" id="FemaleRadio" value="0">
+											</div>
+											<button type="submit" class="btn btn-info mb-2">Search</button>
+										</form>
+
+			            </div>
+		            </div>
+	            </div>
+	            <table class="table table-bordered">
+	                <thead>
+	                    <tr>
+	                        <th>Trade ID</th>
+	                        <th>Customer Name</th>
+	                        <th>Date Trade</th>
+	                        <th>Service Type</th>
+	                        <th>Unit (VND/m2)</th>
+	                        <th>Area</th>
+	                        <th>Action</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr th:each="trade, loop : ${trades}">
+	                        <td th:text="${trade.id}"></td>
+	                        <td th:text="${trade.customer.name}"></td>
+	                        <td th:text="${trade.date}"></td>
+	                        <td th:text="${trade.serviceType == 1 ? 'Land' : 'House & Land'}"></td>
+		                    	<td th:text="${#numbers.formatDecimal((trade.unit), 0, 'COMMA', 0, 'POINT')}"></td>
+	                        <td th:text="${trade.area}"></td>
+	                        <td>
+	                            <a th:href="@{/view/{id}(id=${trade.id})}" class="detail" title="detail" data-toggle="tooltip">Detail</a>
+	                        </td>
+	                    </tr>
+	                    
+	                </tbody>
+	            </table>
+	    </div>
+	</div>
+	
+	<th:block th:replace="~{_layout :: _js}"></th:block>
+</body>
+</html>
