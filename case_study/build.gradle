@@ -24,15 +24,11 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.20'
-
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
 }
 
-
-compileJava.options.encoding = 'UTF-8'
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
 tasks.named('test') {
     useJUnitPlatform()

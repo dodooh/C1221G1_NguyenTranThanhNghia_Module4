@@ -1,4 +1,4 @@
-package com.codegym.furama.controller;
+package com.codegym.furama.rest_controller;
 
 
 import com.codegym.furama.dto.EmployeeDto;
@@ -53,7 +53,6 @@ public class EmployeeRestController {
         responseObject.put("positions", iPositionService.findAll());
         responseObject.put("departments", iDepartmentService.findAll());
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
-
     }
 
     @PatchMapping(value = "")

@@ -60,7 +60,8 @@ public class ContractDetailController {
     @GetMapping("create/{id}")
     public String goCreate(@PathVariable String id, Model model) throws ObjectNotFoundException {
         ContractDetailDto cdt = new ContractDetailDto();
-        Contract ct = contractService.findById(id).orElseThrow(ObjectNotFoundException::new);
+        Contract ct = contractService.findById(id)
+            .orElseThrow(ObjectNotFoundException::new);
         cdt.setContract(ct);
         model.addAttribute("contractDetailDto", cdt);
         return "contract_detail/create";

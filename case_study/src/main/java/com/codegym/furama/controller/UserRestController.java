@@ -30,6 +30,7 @@ public class UserRestController {
     public ResponseEntity<List<AppUser>> getAllUser() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
+
     /* ---------------- GET USER BY ID ------------------------ */
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserById(@PathVariable Long id) {
@@ -39,6 +40,7 @@ public class UserRestController {
         }
         return new ResponseEntity<Object>("Not Found User", HttpStatus.NO_CONTENT);
     }
+
     /* ---------------- CREATE NEW USER ------------------------ */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity<String> createUser(@RequestBody AppUser user) {
@@ -48,12 +50,14 @@ public class UserRestController {
             return new ResponseEntity<String>("User Existed!", HttpStatus.BAD_REQUEST);
         }
     }
+
     /* ---------------- DELETE USER ------------------------ */
     @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
         userService.delete(id);
         return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
     }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<String> login(HttpServletRequest request, @RequestBody AppUser user) {
         String result = "";

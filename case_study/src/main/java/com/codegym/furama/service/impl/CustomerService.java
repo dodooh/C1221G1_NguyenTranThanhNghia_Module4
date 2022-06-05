@@ -24,13 +24,13 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void save(Customer customer) {
-        iCustomerRepository.save(customer);
+    public Customer save(Customer customer) {
+        return iCustomerRepository.save(customer);
     }
 
     @Override
     public Optional<Customer> findById(String id) {
-        return iCustomerRepository.findById(id);
+        return iCustomerRepository.findByIdAndIsActivated(id, true);
     }
 
     @Override

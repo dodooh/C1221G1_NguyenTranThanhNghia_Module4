@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        http.authorizeRequests().antMatchers("/","/signup", "/login", "/logout",  "/api/user/login").permitAll();
+        http.authorizeRequests().antMatchers("/","/signup", "/login", "/logout",  "/api/user/login", "/api/customers/**").permitAll();
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
             .antMatchers(HttpMethod.GET,"/api/user/**").hasAnyRole("USER","ADMIN")
